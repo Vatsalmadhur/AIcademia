@@ -1,17 +1,24 @@
 <div class="body">
-  <div class="outerNav">
-    <div class="innerNav i1">
-      <div class="logoBox flexCent">
-        <a routerLink="" class="link"><p><img class="logo" src="../assets/alcademia.png" alt=""></p></a>
-      </div>
-      <div class="abt flexCent">
-        <a routerLink="about" class="link">
-          <p class="custFont ">About Us</p>
-        </a>
+  <div class="outerNav flexCent">
+    <div class="midNav flexCent">
+      <div class="innerNav i1 flexCent">
+        <div class="logoBox flexCent">
+          <a routerLink="" class="link">
+            <p><img class="logo" src="../assets/logo-no-background.svg" alt=""></p>
+          </a>
+        </div>
+        <div class="abt flexCent">
+          <a routerLink="about" class="link">
+            <p class="custFont ">About Us</p>
+          </a>
 
+        </div>
       </div>
+
+    <div class="innerNav i2">
+      <div class="empty"></div><app-dw-button></app-dw-button>
     </div>
-    <div class="innerNav i2"><div class="empty"></div><app-dw-button></app-dw-button></div>
+  </div>
 
   </div>
   <router-outlet></router-outlet>
