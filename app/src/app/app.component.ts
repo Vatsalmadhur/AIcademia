@@ -4,18 +4,12 @@ import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-
-@NgModule ({
-  imports: [
-    MatSlideToggleModule,
-  ]
-})
-export class AppModule {}
+import { DwButtonComponent } from './dw-button/dw-button.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet,NavbarComponent,RouterModule],
+  imports: [CommonModule, RouterOutlet,NavbarComponent,RouterModule,DwButtonComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.sass'
 })
