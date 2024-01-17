@@ -1,5 +1,11 @@
 .btn {
-  height: 60px;
-  width: 220px;
-  font-size: 1.5rem;
+  height: 55px;
+  width: 170px;
+  font-size: 1.2rem;
+  border-radius: 40px;
+}
+
+.mat-mdc-raised-button.custom {
+  background-color: #D08770;
+  color: #eceff4;
 }/*# sourceMappingURL=dw-button.component.css.map */

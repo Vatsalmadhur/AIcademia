@@ -27,6 +27,7 @@
 .innerNav div {
   height: auto;
   width: auto;
+  margin-top: 20px;
 }
 
 .logo {
@@ -37,21 +38,9 @@
 
 .link {
   text-decoration: none;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
+  font-weight: 300;
   color: white;
-}
-
-.btn {
-  width: 150px;
-  height: auto;
-  padding: 5px;
-  margin-right: 10px;
-}
-
-.btnTxt {
-  font-size: 1.2rem;
-  line-height: 20px;
-  margin: 0;
 }
 
 .empty {

@@ -1,1 +1,38 @@
-/*# sourceMappingURL=about.component.css.map */
+.body {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+
+.outerAbt {
+  width: 60vw;
+}
+
+.abtBox {
+  border-bottom: 2px solid black;
+  margin: 100px 0 50px 0;
+}
+
+.abtHeading {
+  font-size: 4rem;
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+
+.card-box-outer {
+  justify-content: space-around;
+  flex-wrap: wrap;
+  width: 60vw;
+  height: auto;
+  min-height: 450px;
+}
+
+.card-box-inner {
+  flex-direction: row;
+  width: 40vw;
+  height: auto;
+  min-height: 500px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}/*# sourceMappingURL=about.component.css.map */

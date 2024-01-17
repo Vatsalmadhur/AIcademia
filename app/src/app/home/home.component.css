@@ -1,8 +1,7 @@
 .body {
-  height: 90vh;
+  height: 100vh;
   width: 100%;
   background-color: #eceff4;
-  border: 2px solid blue;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -10,27 +9,29 @@
 .box {
   height: auto;
   max-height: 90vh;
-  width: 600px;
-  border: 2px solid red;
+  width: 700px;
 }
 
 .textBox {
   height: auto;
   min-height: 500px;
-  width: 45vw;
-  border: 2px solid yellow;
+  width: 600px;
 }
 
 .heading {
   font-size: 3rem;
   font-weight: 700;
-  color: primary-dark;
+  color: #3B4252;
   line-height: 70px;
+}
+
+.aicademia {
+  color: #D08770;
 }
 
 .subHeading {
   font-size: 1.6rem;
-  color: primary-dark;
+  color: #4C566A;
   font-weight: 200;
   line-height: 30px;
   width: auto;
@@ -42,9 +43,10 @@
 }
 
 .btnBox {
-  width: 35vw;
+  width: 20vw;
   height: auto;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .phoneBox {
@@ -52,21 +54,20 @@
   justify-content: space-around;
   flex-wrap: wrap;
   width: 500px;
+  height: 700px;
 }
 
 .phoneDiv {
-  height: 400px;
+  height: auto;
   width: auto;
-  border: 2px solid pink;
 }
 
 .extra {
-  height: 250px;
-  width: 250px;
-  border: 2px solid blue;
+  height: 50px;
+  width: 50px;
 }
 
 .phoneImg {
-  height: 450px;
-  width: 200px;
+  height: 500px;
+  width: 250px;
 }/*# sourceMappingURL=home.component.css.map */
