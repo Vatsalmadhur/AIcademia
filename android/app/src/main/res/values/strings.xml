@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AIcademia</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="WEB_CLIENT_ID">143787822910-6aktigcnr99b72d98h0277ednnd134sc.apps.googleusercontent.com</string>
+</resources>
