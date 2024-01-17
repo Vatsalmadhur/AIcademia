@@ -1,1 +1,1 @@
-{"version":3,"sources":["ln-button.component.sass","ln-button.component.css"],"names":[],"mappings":"AAEA;EACI,YAAA;EACA,YAAA;EACA,iBAAA;EACA,cANW;EAOX,yBAAA;EACA,mBAAA;ACDJ;;ADEA;EACI,yBATY;ACUhB","file":"ln-button.component.css"}
+{"version":3,"sources":["ln-button.component.sass","ln-button.component.css"],"names":[],"mappings":"AAEA;EACI,YAAA;EACA,YAAA;EACA,iBAAA;EACA,cANW;EAOX,yBAAA;EACA,mBAAA;EACA,gBAAA;EACA,qBAAA;ACDJ;;ADGA;EACI,yBAZY;ACYhB","file":"ln-button.component.css"}

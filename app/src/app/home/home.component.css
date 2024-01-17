@@ -1,21 +1,30 @@
 .body {
-  height: 100vh;
+  min-height: 100vh;
+  height: auto;
   width: 100%;
   background-color: #eceff4;
   justify-content: center;
-  flex-wrap: wrap;
+  flex-wrap: wrap-reverse;
 }
 
 .box {
   height: auto;
   max-height: 90vh;
-  width: 700px;
+  width: 600px;
+  min-width: 300px;
+  margin: 0 10px 0 10px;
 }
 
+@media screen and (max-width: 900px) {
+  .box {
+    width: 90%;
+  }
+}
 .textBox {
   height: auto;
   min-height: 500px;
-  width: 600px;
+  width: auto;
+  margin: 0 10px 0 10px;
 }
 
 .heading {
@@ -43,7 +52,7 @@
 }
 
 .btnBox {
-  width: 20vw;
+  max-width: 400px;
   height: auto;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -57,6 +66,11 @@
   height: 700px;
 }
 
+@media screen and (max-width: 520px) {
+  .phoneBox {
+    height: 400px;
+  }
+}
 .phoneDiv {
   height: auto;
   width: auto;
@@ -70,4 +84,11 @@
 .phoneImg {
   height: 500px;
   width: 250px;
+}
+
+@media screen and (max-width: 520px) {
+  .phoneImg {
+    height: 300px;
+    width: 150px;
+  }
 }/*# sourceMappingURL=home.component.css.map */

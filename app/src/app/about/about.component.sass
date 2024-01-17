@@ -1,6 +1,12 @@
+$primary-orange: #D08770
+$primary-dark: #3B4252
+$primary-light: #eceff4
+$secondary-dark: #4C566A
 .body
-    height: 100vh
+    min-height: 100vh
+    height: auto
     width: 100vw
+    background-color: $primary-light
     // border: 2px solid red
     display: flex
     // align-items: center
@@ -9,12 +15,13 @@
     // border: 2px solid red
     width: 60vw
 .abtBox
-    border-bottom: 2px solid black
+    border-bottom: 2px solid $primary-orange
     margin:100px 0 50px 0
 .abtHeading
-    font-size: 4rem
+    font-size: 3rem
     margin-top: 20px
     padding-bottom: 20px
+    color: $primary-dark
 .card-box-outer
     justify-content: space-around
     flex-wrap: wrap

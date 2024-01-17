@@ -12,10 +12,15 @@
 
 .midNav {
   height: 60px;
-  width: 80vw;
+  width: 65vw;
   justify-content: space-between;
 }
 
+@media screen and (max-width: 600px) {
+  .midNav {
+    width: 100vw;
+  }
+}
 .innerNav {
   height: 60px;
   width: 450px;
@@ -46,4 +51,10 @@
 .empty {
   width: 150px;
   height: 10px;
+}
+
+@media screen and (max-width: 400px) {
+  .i2 {
+    display: none;
+  }
 }/*# sourceMappingURL=app.component.css.map */

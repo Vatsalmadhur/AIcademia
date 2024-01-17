@@ -1,10 +1,12 @@
 .btn {
-  height: 60px;
+  height: 55px;
   width: 170px;
   font-size: 1.2rem;
   color: #5E81AC;
   border: 2px solid #5E81AC;
   border-radius: 40px;
+  font-weight: 400;
+  margin: 10px 0 10px 0;
 }
 
 .mat-mdc-raised-button.custom {

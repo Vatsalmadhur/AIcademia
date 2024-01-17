@@ -1,6 +1,8 @@
 .body {
-  height: 100vh;
+  min-height: 100vh;
+  height: auto;
   width: 100vw;
+  background-color: #eceff4;
   display: flex;
   justify-content: center;
 }
@@ -10,14 +12,15 @@
 }
 
 .abtBox {
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid #D08770;
   margin: 100px 0 50px 0;
 }
 
 .abtHeading {
-  font-size: 4rem;
+  font-size: 3rem;
   margin-top: 20px;
   padding-bottom: 20px;
+  color: #3B4252;
 }
 
 .card-box-outer {

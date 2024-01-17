@@ -2,7 +2,9 @@
   height: 55px;
   width: 170px;
   font-size: 1.2rem;
+  font-weight: 300;
   border-radius: 40px;
+  margin: 10px 0 10px 0;
 }
 
 .mat-mdc-raised-button.custom {

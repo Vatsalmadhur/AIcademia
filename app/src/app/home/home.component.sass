@@ -4,26 +4,33 @@ $primary-light: #eceff4
 $secondary-dark: #4C566A
 
 .body
-    height: 100vh
+    min-height: 100vh
+    height: auto
     width: 100%
     background-color: $primary-light
     //border: 2px solid blue
     justify-content: center
-    flex-wrap: wrap
+    flex-wrap: wrap-reverse
 
 .box
     height: auto
     max-height: 90vh
-    width: 700px
+    width: 600px
+    min-width:300px
     //border: 2px solid red
+    margin: 0 10px 0 10px
     //margin-left: 20px
     //margin-right: 20px
+@media screen and (max-width: 900px)
+    .box
+        width: 90%
 
 .textBox
     height: auto
     min-height: 500px
-    width: 600px
+    width: auto
     //border: 2px solid yellow
+    margin: 0 10px 0 10px
 
 .heading
     font-size:3rem
@@ -42,17 +49,25 @@ $secondary-dark: #4C566A
     height: 600px
     width: 600px
 .btnBox
-    width: 20vw
+    max-width: 400px
     height: auto
     justify-content: space-between
     flex-wrap: wrap
     //border: 2px solid red
+
 .phoneBox
     flex-direction: column
     justify-content: space-around
     flex-wrap: wrap
     width: 500px
     height: 700px
+    //border: 2px solid pink
+
+@media screen and (max-width:520px)
+    .phoneBox
+        //border: 2px solid red
+        height: 400px
+
 .phoneDiv
     height: auto
     width: auto
@@ -64,4 +79,8 @@ $secondary-dark: #4C566A
 .phoneImg
     height: 500px
     width: 250px
+@media screen and (max-width: 520px)
+  .phoneImg
+    height: 300px
+    width: 150px
 
