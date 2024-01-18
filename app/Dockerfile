@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY package*.json .
 
-RUN npm ci
+RUN npm install
 
 COPY . .
 
@@ -18,8 +18,8 @@ WORKDIR /usr/share/nginx/html
 
 RUN rm -rf ./*
 
-COPY --from=builder /app/dist .
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/dist/app/browser /usr/share/nginx/html
+#COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
