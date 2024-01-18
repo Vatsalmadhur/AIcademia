@@ -1,15 +1,16 @@
 FROM node:18-alpine AS builder
-ENV NODE_ENV production
 
 WORKDIR /app
 
 COPY package*.json .
 
+RUN npm i -g @angular/cli
 RUN npm install
 
 COPY . .
 
-RUN ./node_modules/.bin/ng build --configuration production --aot
+
+RUN npm run prod
 
 FROM nginx:1.25.3-alpine as production
 ENV NODE_ENV production
