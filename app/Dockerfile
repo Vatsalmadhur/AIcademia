@@ -9,7 +9,7 @@ RUN npm install
 
 COPY . .
 
-RUN npm run prod
+RUN ./node_modules/.bin/ng build --configuration production --aot
 
 FROM nginx:1.25.3-alpine as production
 ENV NODE_ENV production
