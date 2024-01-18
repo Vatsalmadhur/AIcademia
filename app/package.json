@@ -8,6 +8,8 @@
     "prod":"ng build --configuration production --aot --base-href /Aicademia",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "predeploy":"npm run prod",
+    "deploy":"gh-pages -d dist/app/browser",
     "serve:ssr:app": "node dist/app/server/server.mjs"
   },
   "private": true,
