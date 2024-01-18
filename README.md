@@ -1,0 +1,1 @@
+[![Build and publish a Docker image](https://github.com/Vatsalmadhur/AIcademia/actions/workflows/docker-build.yml/badge.svg)](https://github.com/Vatsalmadhur/AIcademia/actions/workflows/docker-build.yml)
