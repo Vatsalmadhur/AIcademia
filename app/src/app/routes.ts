@@ -5,7 +5,6 @@ const routeConfig: Routes = [
     {
       path: '',
       component: HomeComponent,
-    //   title: 'Home page'
     },
     {
       path: 'about',
