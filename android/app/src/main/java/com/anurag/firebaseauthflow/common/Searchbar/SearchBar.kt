@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -57,7 +56,7 @@ fun Searchbar(searchVm: SearchViewModel, callback: (it: String) -> Unit) {
         leadingIcon = {
             if (isSearching)
                 IconButton(onClick =
-                { searchVm.toggleSearch()}) {
+                { searchVm.toggleSearch() }) {
                     Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
                 }
             else
@@ -66,12 +65,12 @@ fun Searchbar(searchVm: SearchViewModel, callback: (it: String) -> Unit) {
         },
         trailingIcon = {
             if (isSearching)
-            IconButton(onClick = { searchVm.clear() }) {
-                Icon(imageVector = Icons.Default.Close, contentDescription = null)
-            }
+                IconButton(onClick = { searchVm.clear() }) {
+                    Icon(imageVector = Icons.Default.Close, contentDescription = null)
+                }
         },
     ) {
-        Column (modifier = Modifier.height(200.dp)){
+        Column(modifier = Modifier.height(200.dp)) {
             FlowColumn(
                 modifier = Modifier
                     .verticalScroll(scrollState)

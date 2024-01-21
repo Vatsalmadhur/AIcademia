@@ -35,6 +35,18 @@ fun DashboardNew(authVM: AuthViewModel) {
                 ModalNavigationDrawer(
                     drawerContent = {
                         ModalDrawerSheet {
+                            NavigationDrawerItem(label = { Text(text = "Introduction") },
+                                selected = false,
+                                onClick = {})
+                            NavigationDrawerItem(label = { Text(text = "Today's goals") },
+                                selected = false,
+                                onClick = {})
+                            NavigationDrawerItem(label = { Text(text = "Expert's Advice") },
+                                selected = false,
+                                onClick = {})
+                            NavigationDrawerItem(label = { Text(text = "Resources") },
+                                selected = false,
+                                onClick = {})
                             NavigationDrawerItem(label = { Text(text = "Logout") },
                                 selected = false,
                                 onClick = { authVM.logout() })

@@ -1,7 +1,9 @@
 package com.anurag.firebaseauthflow.dashboard.Navigation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,7 +23,7 @@ fun Navigation_dash(navController: NavHostController, authVM: AuthViewModel) {
     val startRoute = remember {
         mutableStateOf("home")
     }
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface)) {
         NavHost(navController = navController, startDestination = startRoute.value) {
             composable("home") {
                 Home(authVM, navController)

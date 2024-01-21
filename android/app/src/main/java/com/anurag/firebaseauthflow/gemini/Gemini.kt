@@ -1,64 +1,88 @@
 package com.anurag.firebaseauthflow.gemini
 
+import android.util.Log
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.anurag.firebaseauthflow.dashboard.Home.Prompt
+import com.anurag.firebaseauthflow.dashboard.Home.homeViewModel
 import com.anurag.firebaseauthflow.firestore.About
 import com.google.ai.client.generativeai.Chat
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.content
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.util.concurrent.CancellationException
 
-class Gemini(scope: CoroutineScope) {
+class Gemini : ViewModel() {
+
+    private val cards = listOf(
+        Prompt.RES,
+        Prompt.ADVICE,
+        Prompt.GOALS,
+        Prompt.INTRO,
+    )
+    private lateinit var bot: Chat
+    private lateinit var dataVM: homeViewModel
+
+    private fun generatePrompt(skills: About) =
+        "You are working as a personal teacher for a student." +
+                " This particular student have already acquired some skills and want to learn some new skill. " +
+                "As a personal teacher your job is to respond with valid answers for the questions that your student is asking.\n" +
+                "\n" +
+                "All answers should be less than 50 words.\n\n" +
+                "Answer only what is asked and follow the above actions strictly." +
+                "" +
+                "Output Instructions: " +
+                "1. Only response in plain text." +
+                "2. Use three semicolons(;;;) to mark EOL or EO paragraph." +
+                "3. Answers should be concise and brief." +
+                "\n\nAct as a computer software: give me only the requested output, no conversation, only output in plain text." +
+                "\n\n" +
+                "Skills Acquired: ${skills.acquired_skills?.joinToString(", ")}\n" +
+                "Skills Learning: ${skills.current_skill}"
+
     private val model: GenerativeModel = GenerativeModel(
         modelName = "gemini-pro",
         apiKey = "",
     )
-    private lateinit var bot: Chat
-    private val scope: CoroutineScope
-    private var retry = 3;
-    private var initOnce: Boolean = false
 
-    init {
-        this.scope = scope
+    private fun setBot(skills: About) {
+        val prompt = generatePrompt(skills)
+        bot = model.startChat(
+            history = listOf(
+                content(role = "user") {
+                    text(prompt)
+                },
+                content(role = "model") {
+                    text("Okay")
+                },
+            )
+        )
     }
 
-    fun setSkills(skills: About) {
-        if (skills.current_skill == null) return
-        else {
-            if (!this.initOnce) {
-                this.initOnce = true
-                this.bot = model.startChat(
-                    history = listOf(
-                        content(role = "user") { text("You are given a list of a skills a person knows and given a skill a person wants to learn. based on the above information you are expected to respond with valid information, introduction, resources, today's goal and expert advice. You will only respond when the question matches above list of questions. You will act like an API server which responds with text only. The Introduction will be of 50 words, today's goal will a topic related to subject which I'm learning. Advice should be of 60 to 100 words. Resources can contain various links for blogs, portals, articles, youtube video links, channel name, books and authors, etc. In all the responses use ';;;' in place of new line.") },
-                        content(role = "model") {
-                            text("okay, I'll only reply the answer as plain text and responds like an api and give valid information.}")
-                        },
-                        content(role = "user") { text("The set of known skills are ${skills.acquired_skills.toString()}. The skills I want to learn is ${skills.current_skill}") },
-                        content(role = "model") { text("Okay, I understand the requirements and I'm going in APO mode from now on.") }
-                    )
+    fun setDataVM(x: homeViewModel, skills: About) {
+        dataVM = x
+        if (skills.current_skill.isNullOrBlank()) return
+        setBot(skills)
+        getRes(cards.size - 1)
+    }
 
-                )
-            }
+    fun getRes(idx: Int) {
+        if (idx < 0) return
+        viewModelScope.launch {
+            val ret = getInfo(cards[idx].pair.second)
+            Log.d("GEMINI", "response: $ret")
+            dataVM.setContent(idx, ret)
+            getRes(idx - 1)
         }
     }
 
-    fun getRes(req: String): List<String> {
-        var ret = ""
-        scope.launch {
-            ret = getInfo(req)
-        }
-        return ret.split(";;;")
-    }
-
-    suspend fun getInfo(req: String): String {
+    suspend fun getInfo(prompt: String): String {
         return try {
-            if (retry == 0) return "Error generating response"
-            this.retry -= 1
-            val response = this.bot.sendMessage("Send me $req.")
+            val response = this.bot.sendMessage(prompt)
             response.text.toString()
         } catch (e: Exception) {
             e.printStackTrace()
-            if (e is CancellationException) throw e
+            if (e is CancellationException) e.printStackTrace()
             "Error generating Response"
         }
     }

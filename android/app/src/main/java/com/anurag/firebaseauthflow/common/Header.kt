@@ -25,7 +25,6 @@ fun Header(title: String, desc:String = "") {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .height(56.dp),
     ) {
         Column(
             modifier = Modifier

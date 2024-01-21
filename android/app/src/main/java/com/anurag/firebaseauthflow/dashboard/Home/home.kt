@@ -1,5 +1,6 @@
 package com.anurag.firebaseauthflow.dashboard.Home
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -12,26 +13,25 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.anurag.firebaseauthflow.auth.AuthViewModel
 import com.anurag.firebaseauthflow.common.CustomButtonV2
 import com.anurag.firebaseauthflow.common.Header
+import com.anurag.firebaseauthflow.common.InfoBar
 import com.anurag.firebaseauthflow.common.card.HomeCard
 import com.anurag.firebaseauthflow.dashboard.profile.SkillsViewModel
 import com.anurag.firebaseauthflow.gemini.Gemini
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun Home(authVM: AuthViewModel, navController: NavHostController) {
@@ -40,14 +40,23 @@ fun Home(authVM: AuthViewModel, navController: NavHostController) {
     val fs = remember {
         SkillsViewModel()
     }
-    val skills = fs.skills.collectAsState()
-    val scope = rememberCoroutineScope()
-    val gemini = Gemini(scope)
-    val intro = "Welcome to the vibrant world of Ruby, a dynamic, object-oriented programming language known for its simplicity and elegance. Developed with a focus on programmer happiness, Ruby offers a clean syntax that prioritizes readability and ease of use. Whether you're an experienced developer in Java, JavaScript, or Python, transitioning to Ruby brings a fresh perspective to your coding journey. Embrace the beauty of Ruby's expressive nature, allowing you to write concise yet powerful code. Its flexibility shines in both web development, through the popular Ruby on Rails framework, and scripting tasks. As you embark on this journey, you'll discover the joy of building applications with fewer lines of code, increased productivity, and a strong community to support your growth. Get ready to explore the unique and delightful features that make Ruby a fantastic addition to your programming toolkit."
-    val goals = "Dive into the core concepts of Ruby programming. Explore variables, data types, and control structures. Additionally, delve into the object-oriented paradigm, understanding classes and methods. By the end of the day, aim for a solid grasp of Ruby's foundational elements, setting the stage for more intricate explorations in your coding journey."
-    val expert = "As you embark on your journey to learn Ruby, remember that programming is both an art and a science. The elegance and expressiveness of Ruby offer a unique canvas for your creativity. Regular practice is the cornerstone of mastering any language, so dedicate time to hands-on coding exercises. Leverage your existing programming knowledge as a bridge to understanding Ruby's syntax and idiosyncrasies. The robust Ruby community is a valuable asset;;; engage in forums, ask questions, and share your insights. Real-world projects provide the opportunity to apply theoretical concepts;;; solidifying your understanding. Embrace experimentation;;; as Ruby encourages a playful and explorative coding approach. As you navigate the language's intricacies;;; be patient with yourself and celebrate the small victories;;; each line of code is a step toward mastery. Happy coding on your Ruby adventure!"
-    val resources = "Ruby Official Documentation: ;;; https://www.ruby-lang.org/en/documentation/;;; The Net Ninja's Ruby Programming Playlist on YouTube: ;;;https://www.youtube.com/playlist?list=PL4cUxeGkcC9gxxVqxdMEpVsPh2lCPxP2V;;; Ruby on Rails Guides: ;;;https://guides.rubyonrails.org/;;; RubyMonk: https://rubymonk.com/;;; \"The Well-Grounded Rubyist\" by David A. Black: ;;;https://www.manning.com/books/the-well-grounded-rubyist-third-edition;;; Udemy - \"Ruby on Rails - The Complete Guide\": ;;;https://www.udemy.com/course/the-complete-ruby-on-rails-developer-course/;;;"
-    gemini.setSkills(skills.value)
+    val skills by fs.skills.collectAsState()
+    val homeVM = remember {
+        homeViewModel()
+    }
+    val gemini = remember {
+        Gemini()
+    }
+    gemini.setDataVM(homeVM, skills)
+    val intro by homeVM.intro.collectAsState()
+    val goals by homeVM.goals.collectAsState()
+    val advice by homeVM.advice.collectAsState()
+    val res by homeVM.resources.collectAsState()
+
+    val cards = listOf(
+        Prompt.INTRO, Prompt.GOALS, Prompt.ADVICE, Prompt.RES
+    )
+
     FlowColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -58,61 +67,67 @@ fun Home(authVM: AuthViewModel, navController: NavHostController) {
     ) {
 
         Header(title = "Hello ${authStatus.data?.username?.split(" ")?.get(0) ?: ""}")
-
-        HomeCard(title = "Introduction", onClick = { /*TODO*/ }) {
-            if (skills.value.current_skill == null) {
-                Text("Please choose a skill from profile section")
-            } else {
-                intro.split(";;;").forEach {
-                    Text(text = it.trim(), modifier = Modifier)
-                    Spacer(modifier = Modifier.height(8.dp))
+        if (skills.current_skill.isNullOrBlank()) {
+            InfoBar(text = "Please Choose your skills to proceed")
+        } else {
+            HomeCard(title = "Introduction", onClick = { /*TODO*/ }) {
+                if (intro.isBlank()) {
+                    Text("Loading...")
+                } else {
+                    intro.split(";;;").forEach {
+                        Text(text = it.trim(), modifier = Modifier)
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
                 }
             }
-        }
-        HomeCard(title = "Today's goal", onClick = { /*TODO*/ }) {
-//            gemini.getRes("Today's goal").forEach {
-//                Text(text = it)
+            HomeCard(title = "Today's goals", onClick = { /*TODO*/ }) {
+                if (goals.isBlank()) {
+                    Text("Loading...")
+                } else {
+                    goals.split(";;;").forEach {
+                        Text(text = it.trim(), modifier = Modifier)
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+                }
+            }
+            HomeCard(title = "Expert's Advice", onClick = { /*TODO*/ }) {
+                if (advice.isBlank()) {
+                    Text("Loading...")
+                } else {
+                    advice.split(";;;").forEach {
+                        Text(text = it.trim(), modifier = Modifier)
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+                }
+            }
+            HomeCard(title = "Resources", onClick = { /*TODO*/ }) {
+                if (res.isBlank()) {
+                    Text("Loading...")
+                } else {
+                    res.split(";;;").forEach {
+                        Text(text = it.trim(), modifier = Modifier)
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+                }
+            }
+//            content.forEachIndexed { idx, it ->
+//                HomeCard(title = cards[idx].pair.first, onClick = { /*TODO*/ }) {
+//                    if (it.isNullOrBlank()) {
+//                        Text("Loading...")
+//                    } else {
+//                        it.split(";;;").forEach {
+//                            Text(text = it.trim(), modifier = Modifier)
+//                            Spacer(modifier = Modifier.height(8.dp))
+//                        }
+//                    }
+//                }
 //            }
-            if (skills.value.current_skill == null) {
-                Text("Please choose a skill from profile section")
-            } else {
-                goals.split(";;;").forEach {
-                    Text(text = it.trim())
-                    Spacer(modifier = Modifier.height(8.dp))
-                }
-            }
-
-        }
-        HomeCard(title = "Expert advice", onClick = { /*TODO*/ }) {
-//            gemini.getRes("Expert's advice").forEach {
-//                Text(text = it)
-//            }
-            if (skills.value.current_skill == null) {
-                Text("Please choose a skill from profile section")
-            } else {
-                expert.split(";;;").forEach {
-                    Text(text = it.trim())
-                    Spacer(modifier = Modifier.height(8.dp))
-                }
-            }
-
-        }
-        HomeCard(title = "Resources", onClick = { /*TODO*/ }) {
-//            gemini.getRes("Resources").forEach {
-//                Text(text = it)
-//            }
-            if (skills.value.current_skill == null) {
-                Text("Please choose a skill from profile section")
-            } else {
-                resources.split(";;;").forEach {
-                    Text(text = it.trim())
-                    Spacer(modifier = Modifier.height(8.dp))
-                }
-            }
 
         }
         HomeCard(title = "Mark as Complete", onClick = { /*TODO*/ }) {
-            CustomButtonV2(label = "Mark as Complete", icon = Icons.Default.Done, onClick = { /*TODO*/ })
+            CustomButtonV2(label = "Mark as Complete",
+                icon = Icons.Default.Done,
+                onClick = { /*TODO*/ })
         }
     }
 }
