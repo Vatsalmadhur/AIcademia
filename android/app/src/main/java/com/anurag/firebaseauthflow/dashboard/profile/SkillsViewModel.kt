@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class SkillsViewModel: ViewModel() {
-    val _skills = MutableStateFlow(About())
+    private val _skills = MutableStateFlow(About())
     val skills = _skills.asStateFlow()
 
-    val fs = FSViewModel()
+    private val fs = FSViewModel()
 
     init {
         viewModelScope.launch {

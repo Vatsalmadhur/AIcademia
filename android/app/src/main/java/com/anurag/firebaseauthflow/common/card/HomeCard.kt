@@ -5,7 +5,9 @@ import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -37,6 +39,7 @@ fun HomeCard(title: String, onClick: () -> Unit, content: @Composable() () -> Un
         ) {
             Header(title = title)
             Divider()
+            Spacer(modifier = Modifier.height(8.dp))
             content()
         }
     }

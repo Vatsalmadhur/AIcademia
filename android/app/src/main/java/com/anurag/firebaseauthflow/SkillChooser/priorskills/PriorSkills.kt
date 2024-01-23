@@ -16,6 +16,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -27,6 +29,7 @@ import com.anurag.firebaseauthflow.SkillChooser.SkillChooser
 import com.anurag.firebaseauthflow.common.Header
 import com.anurag.firebaseauthflow.common.Searchbar.SearchViewModel
 import com.anurag.firebaseauthflow.dashboard.Navigation.Screens
+import com.anurag.firebaseauthflow.dashboard.profile.SkillsViewModel
 import com.anurag.firebaseauthflow.firestore.FSViewModel
 import kotlinx.coroutines.launch
 
@@ -40,9 +43,12 @@ fun PriorSkills(navController: NavHostController) {
     val fs = remember{
         FSViewModel()
     }
-    searchVM.select(1)
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+    val skillsVM = remember{
+        SkillsViewModel()
+    }
+    val skills by skillsVM.skills.collectAsState()
 
     Column(modifier = Modifier.fillMaxSize()) {
         FlowColumn(
@@ -51,7 +57,7 @@ fun PriorSkills(navController: NavHostController) {
                 .verticalScroll(scrollState),
         ) {
             Header(title = "Acquired skills")
-            SkillChooser(searchVM)
+            SkillChooser(searchVM, skills.acquired_skills)
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
                 Button(
                     onClick = {

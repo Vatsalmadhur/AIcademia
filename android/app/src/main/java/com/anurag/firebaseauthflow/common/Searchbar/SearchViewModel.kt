@@ -1,7 +1,5 @@
 package com.anurag.firebaseauthflow.common.Searchbar
 
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anurag.firebaseauthflow.dashboard.profile.SkillsViewModel
@@ -131,13 +129,14 @@ class SearchViewModel : ViewModel() {
         )
     )
 
+    val remainingSkills = _skills.asStateFlow()
 
     val skills = query.combine(_skills) { str, list ->
         if (str.isBlank()) {
-            list.subList(0,5)
+            remainingSkills.value.subList(0, 5)
         }
-        val ret = list.filter { skill ->
-            skill.lowercase().contains(str)
+        val ret = remainingSkills.value.filter { skill ->
+            skill.lowercase().contains(str.lowercase())
         }
         ret.subList(0, min(ret.size, 5))
     }.stateIn(
@@ -162,25 +161,29 @@ class SearchViewModel : ViewModel() {
         }
     }
 
-    fun select(idx:Int){
+    fun select(idx: Int) {
         val skills = skillsVM.skills.value
-        if(idx == 1){
+        if (idx == 1) {
             _selected.value = (skills.acquired_skills ?: listOf()).toSet()
-        }else{
+        } else {
             add(skills.current_skill)
         }
     }
 
-    fun add(text:String?) {
-        if(text!=null)
-        if (_selected.value.contains(text)) {
-            _selected.value = _selected.value - setOf(text)
-        } else
-            _selected.value = _selected.value + setOf(text)
-        clear()
+    fun add(text: String?) {
+        if (!text.isNullOrBlank() && text.isNotEmpty())
+            if (_selected.value.contains(text)) {
+                _selected.value = _selected.value - setOf(text)
+                _skills.value = _skills.value + setOf(text)
+            } else {
+                _selected.value = _selected.value + setOf(text)
+                _skills.value = _skills.value - setOf(text)
+            }
     }
+
     fun save() {
         val text = _query.value
+        if (text.isNotBlank() && text.isNotEmpty())
         if (_selected.value.contains(text)) {
             _selected.value = _selected.value - setOf(text)
         } else
@@ -199,11 +202,11 @@ class SearchViewModel : ViewModel() {
         }
     }
 
-    fun clear(){
+    fun clear() {
         _query.value = ""
     }
 
-    fun closeSearch(){
+    fun closeSearch() {
         _isSearching.value = false
     }
 }

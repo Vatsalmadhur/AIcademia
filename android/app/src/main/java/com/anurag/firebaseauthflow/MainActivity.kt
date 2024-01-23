@@ -29,10 +29,7 @@ class MainActivity : ComponentActivity() {
         gAuth = GoogleAuthUiClient(this, Identity.getSignInClient(this))
         authVM = AuthViewModel()
         authVM.getCurrentUser()
-//        val model = GenerativeModel(
-//            modelName = "gemini-pro",
-//            apiKey = "AIzaSyDnjDtw6KaQ_Gn6Y42VMlzE2QQpgeQvoFY"
-//        )
+
         setContent {
             FirebaseAuthFlowTheme {
                 Surface(

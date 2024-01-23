@@ -1,6 +1,7 @@
 package com.anurag.firebaseauthflow.SkillChooser.priorskills
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -48,19 +49,20 @@ fun NewSkill(navController: NavHostController) {
     }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    val skillsVM = SkillsViewModel()
-    searchVM.select(2)
+    val skillsVM = remember{
+        SkillsViewModel()
+    }
     val skills by skillsVM.skills.collectAsState()
 
     Column(modifier = Modifier.fillMaxSize()) {
         FlowColumn(
             modifier = Modifier
                 .padding(horizontal = 12.dp)
-                .verticalScroll(scrollState),
+                .verticalScroll(scrollState).background(MaterialTheme.colorScheme.surface),
         ) {
             Header(title = "New skill", desc = "What are you learning next ?")
             Spacer(modifier = Modifier.height(8.dp))
-            SkillChooser(searchVM)
+            SkillChooser(searchVM, listOf(skills.current_skill ?: ""))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
                 Button(
                     onClick = {

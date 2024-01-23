@@ -1,5 +1,6 @@
 package com.anurag.firebaseauthflow.common.BottomNav
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,6 +24,7 @@ fun BottomNavigation(navController: NavHostController) {
     )
     NavigationBar(
         modifier = Modifier
+            .background(MaterialTheme.colorScheme.surface)
             .clip(RoundedCornerShape(15.dp, 15.dp, 0.dp, 0.dp))
             .navigationBarsPadding()
     ) {
