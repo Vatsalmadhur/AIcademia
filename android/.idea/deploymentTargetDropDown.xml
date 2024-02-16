@@ -2,39 +2,31 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="AutoCompletePreview">
-        <State />
-      </entry>
-      <entry key="DashPreview">
+      <entry key="AIcademia">
         <State>
-          <targetSelectedWithDropDown>
+          <runningDeviceTargetSelectedWithDropDown>
             <Target>
-              <type value="QUICK_BOOT_TARGET" />
+              <type value="RUNNING_DEVICE_TARGET" />
               <deviceKey>
                 <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\Anurag\.android\avd\Medium_Phone_API_30.avd" />
+                  <type value="SERIAL_NUMBER" />
+                  <value value="dd9c6764" />
                 </Key>
               </deviceKey>
             </Target>
-          </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-01-14T19:59:45.013372400Z" />
-        </State>
-      </entry>
-      <entry key="app">
-        <State>
-          <targetSelectedWithDropDown>
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-02-15T14:28:18.024661900Z" />
+          <runningDeviceTargetsSelectedWithDialog>
             <Target>
-              <type value="QUICK_BOOT_TARGET" />
+              <type value="RUNNING_DEVICE_TARGET" />
               <deviceKey>
                 <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\Anurag\.android\avd\Medium_Phone_API_30.avd" />
+                  <type value="SERIAL_NUMBER" />
+                  <value value="adb-dd9c6764-5SHe5f._adb-tls-connect._tcp" />
                 </Key>
               </deviceKey>
             </Target>
-          </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-01-14T07:05:16.827073500Z" />
+          </runningDeviceTargetsSelectedWithDialog>
         </State>
       </entry>
     </value>

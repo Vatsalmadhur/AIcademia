@@ -123,7 +123,7 @@ fun SkillCard(
 fun SkillCardPreview() {
     FirebaseAuthFlowTheme {
         Surface {
-            SkillCardV2(skill = "React Native") {}
+            SkillCard(skill = "React Native") {}
         }
     }
 }
