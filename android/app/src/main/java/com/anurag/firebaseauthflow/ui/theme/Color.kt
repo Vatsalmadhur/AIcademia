@@ -1,11 +1,3 @@
-import NordColors.Aurora2
-import NordColors.Aurora3
-import NordColors.Frost4
-import NordColors.PolarNight1
-import NordColors.PolarNight2
-import NordColors.PolarNight4
-import NordColors.Snow1
-import NordColors.Snow2
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
@@ -44,8 +36,8 @@ val LightPalette = lightColorScheme(
     error = NordColors.Aurora1,
     onError = Color.White,
     outline = NordColors.PolarNight4,
-    tertiary = PolarNight4,
-    onTertiary = Snow1
+    tertiary = NordColors.PolarNight4,
+    onTertiary = NordColors.Snow1
 )
 
 val DarkPalette = darkColorScheme(
@@ -60,6 +52,6 @@ val DarkPalette = darkColorScheme(
     error = NordColors.Aurora1,
     onError = Color.White,
     outline = NordColors.Aurora4,
-    tertiary =  Frost4,
-    onTertiary = Snow2
+    tertiary = NordColors.Frost4,
+    onTertiary = NordColors.Snow2,
 )

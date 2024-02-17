@@ -67,6 +67,10 @@ fun NewSkill(navController: NavHostController) {
                 Button(
                     onClick = {
                         scope.launch {
+                            if(searchVM.selected.value.isEmpty()){
+                                Toast.makeText(context, "Please select a skill", Toast.LENGTH_SHORT).show()
+                                return@launch
+                            }
                             val res = fs.updateCurrentSkill(searchVM.selected.value.first())
                             if (res){
                                 Toast.makeText(context, "Skills updated successfully", Toast.LENGTH_LONG).show()
