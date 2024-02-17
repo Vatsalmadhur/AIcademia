@@ -29,4 +29,11 @@ sealed class Prompt(val pair: Pair<String, String>) {
             "Question: Provide me some resources which I can use to learn what is required to complete today's goals. also provide urls for blogs, books, docs, and videos if needed.\n" + "Answer: "
         )
     )
+
+    object QUIZ : Prompt(
+        Pair(
+            "Quiz",
+            "Question: Provide me some resources which I can use to learn what is required to complete today's goals. also provide urls for blogs, books, docs, and videos if needed.\n" + "Answer: "
+        )
+    )
 }

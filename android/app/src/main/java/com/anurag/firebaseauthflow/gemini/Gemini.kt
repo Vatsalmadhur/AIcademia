@@ -59,6 +59,7 @@ class Gemini : ViewModel() {
         )
     }
 
+
     fun setDataVM(x: homeViewModel, skills: About) {
         dataVM = x
         if (skills.current_skill.isNullOrBlank()) return
@@ -71,7 +72,7 @@ class Gemini : ViewModel() {
         viewModelScope.launch {
             val ret = getInfo(cards[idx].pair.second)
             Log.d("GEMINI", "response: $ret")
-            dataVM.setContent(idx, ret)
+//            dataVM.setContent(idx, ret)
             getRes(idx - 1)
         }
     }
