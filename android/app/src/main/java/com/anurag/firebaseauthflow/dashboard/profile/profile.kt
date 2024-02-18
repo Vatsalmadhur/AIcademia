@@ -29,29 +29,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.anurag.firebaseauthflow.auth.AuthViewModel
 import com.anurag.firebaseauthflow.common.CustomButtonV2
 import com.anurag.firebaseauthflow.common.InfoBar
 import com.anurag.firebaseauthflow.common.SkillCard
-import com.anurag.firebaseauthflow.common.card.HomeCard
+import com.anurag.firebaseauthflow.common.card.HomeCardClickable
 import com.anurag.firebaseauthflow.dashboard.Navigation.Screens
-import com.anurag.firebaseauthflow.firestore.About
-import com.anurag.firebaseauthflow.firestore.FSViewModel
 import com.anurag.firebaseloginflow.presentation.sign_in.UserData
 import com.google.accompanist.glide.rememberGlidePainter
-import kotlinx.coroutines.launch
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalLayoutApi::class)
@@ -85,7 +79,7 @@ fun Profile(authVM: AuthViewModel, navController: NavHostController) {
             )
         }
 
-        HomeCard(title = "Acquired Skills", onClick = {
+        HomeCardClickable(title = "Acquired Skills", onClick = {
             navController.navigate(Screens.PriorSkills.route)
         }) {
             FlowRow(
@@ -100,7 +94,7 @@ fun Profile(authVM: AuthViewModel, navController: NavHostController) {
             }
         }
 
-        HomeCard(title = "Currently Learning", onClick = {
+        HomeCardClickable(title = "Currently Learning", onClick = {
             navController.navigate(Screens.NewSkill.route)
         }) {
             FlowRow(
