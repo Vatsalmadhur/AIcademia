@@ -50,26 +50,20 @@ import kotlinx.coroutines.tasks.await
 @OptIn(ExperimentalLayoutApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun Home(authVM: AuthViewModel, navController: NavHostController) {
-
     val scrollState = rememberScrollState()
     val authStatus by authVM.currentUser.collectAsState()
     val fs: SkillsViewModel = viewModel()
     val homeVM: homeViewModel = viewModel()
     val db: FSViewModel = viewModel()
-
     val skills by fs.skills.collectAsState()
     val content by homeVM.content.collectAsState()
     val loading by homeVM.isLoading.collectAsState()
-    val pagerState = rememberPagerState {
-        5
-    }
-
+    val pagerState = rememberPagerState { 5 }
     LaunchedEffect(Unit) {
         homeVM.fetchContent()
         val str = FirebaseMessaging.getInstance().token.await()
         db.setFcmKey(str)
     }
-
     val cards by remember {
         mutableStateOf(listOf(Prompt.INTRO, Prompt.GOALS, Prompt.RES, Prompt.ADVICE, Prompt.QUIZ))
     }
