@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -70,13 +71,12 @@ fun HomeCardClickable(title: String, onClick: () -> Unit, content: @Composable()
 
 
 @Composable
-fun HomeCard(modifier: Modifier = Modifier, title: String, content: @Composable() () -> Unit) {
+fun HomeCard( modifier: Modifier = Modifier, title: String, icon:ImageVector? = null, iconOnClick:()->Unit = {} , content: @Composable() () -> Unit) {
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.background)
     ) {
-        Header(title = title)
+        Header(title = title, icon=icon, iconOnClick=iconOnClick)
         Divider()
         Spacer(modifier = Modifier.height(8.dp))
         content()

@@ -1,13 +1,12 @@
 package com.anurag.firebaseauthflow.dashboard.Home
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowColumn
-import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,7 +20,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,23 +32,26 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.lerp
+import androidx.compose.ui.util.lerp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.anurag.firebaseauthflow.R
 import com.anurag.firebaseauthflow.auth.AuthViewModel
+import com.anurag.firebaseauthflow.common.CustomButton
 import com.anurag.firebaseauthflow.common.CustomButtonV2
 import com.anurag.firebaseauthflow.common.Header
 import com.anurag.firebaseauthflow.common.InfoBar
 import com.anurag.firebaseauthflow.common.Loader.Loader
 import com.anurag.firebaseauthflow.common.Quiz.QuizList
 import com.anurag.firebaseauthflow.common.card.HomeCard
-import com.anurag.firebaseauthflow.common.card.HomeCardClickable
 import com.anurag.firebaseauthflow.dashboard.Navigation.Screens
 import com.anurag.firebaseauthflow.dashboard.profile.SkillsViewModel
 import com.anurag.firebaseauthflow.firestore.Content
@@ -54,9 +60,9 @@ import com.anurag.firebaseauthflow.firestore.QuizModel
 import com.google.firebase.messaging.FirebaseMessaging
 import com.halilibo.richtext.markdown.Markdown
 import com.halilibo.richtext.ui.material3.RichText
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlin.math.absoluteValue
-import androidx.compose.ui.util.lerp
 
 @Suppress("UNCHECKED_CAST")
 @OptIn(ExperimentalLayoutApi::class, ExperimentalFoundationApi::class)
@@ -71,6 +77,7 @@ fun Home(authVM: AuthViewModel, navController: NavHostController) {
     val content by homeVM.content.collectAsState()
     val loading by homeVM.isLoading.collectAsState()
     val pagerState = rememberPagerState { 5 }
+    val scrollCoroutineScope = rememberCoroutineScope()
     LaunchedEffect(Unit) {
         homeVM.fetchContent()
         val str = FirebaseMessaging.getInstance().token.await()
@@ -79,6 +86,11 @@ fun Home(authVM: AuthViewModel, navController: NavHostController) {
     val cards by remember {
         mutableStateOf(listOf(Prompt.INTRO, Prompt.GOALS, Prompt.RES, Prompt.ADVICE, Prompt.QUIZ))
     }
+
+    val btnColor = ButtonDefaults.buttonColors(
+        contentColor = MaterialTheme.colorScheme.tertiary,
+        containerColor = MaterialTheme.colorScheme.onTertiary
+    )
     FlowColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -87,11 +99,24 @@ fun Home(authVM: AuthViewModel, navController: NavHostController) {
             .verticalScroll(scrollState),
         verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top)
     ) {
-        HomeCard(modifier = Modifier.background(MaterialTheme.colorScheme.onBackground).border(2.dp, Color.White), title = "Hello ${authStatus.data?.username?.split(" ")?.get(0) ?: ""}" ) {
-            Text(text = "Let's continue with your learning journey.")
-            FlowRow {
-                Text(text = "Currently Learning: ")
-                Text(text = "${skills.current_skill}", style = TextStyle(color = MaterialTheme.colorScheme.onBackground))
+        Header(
+            title = "Hello ${authStatus.data?.username?.split(" ")?.get(0) ?: ""}",
+            desc = "Let's begin today's learning session"
+        )
+        Divider(thickness = 4.dp, color = MaterialTheme.colorScheme.outline)
+        TabRow(selectedTabIndex = pagerState.currentPage, ) {
+            cards.forEachIndexed{idx, tab ->
+                Tab(
+                    selected = pagerState.currentPage == idx,
+                    onClick = {scrollCoroutineScope.launch {
+                        pagerState.animateScrollToPage(idx)
+                    }},
+                    text = { Text(
+                        text = tab.pair.first,
+                        maxLines = 1,
+                        overflow = TextOverflow.Visible
+                    )}
+                )
             }
         }
         if (skills.current_skill.isNullOrBlank()) {
@@ -113,45 +138,54 @@ fun Home(authVM: AuthViewModel, navController: NavHostController) {
                     state = pagerState,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .border(2.dp, Color.Red),
-                            beyondBoundsPageCount = cards.size,
+                        .animateContentSize()
                 ) {
-                    if (content !is Content ) {
+                    if (content !is Content) {
                         InfoBar(text = "")
                     } else {
                         val prompt = cards[it]
-                        when(it) {
+                        when (it) {
                             cards.size - 1 -> {
                                 val tabData = content!![prompt] as List<QuizModel>?
-                                HomeCard(title = "Mark as Complete", modifier=Modifier.graphicsLayer {
-                                    val pageOffset = (
-                                            (pagerState.currentPage - it) + pagerState
-                                                .currentPageOffsetFraction
-                                            ).absoluteValue
-                                    alpha = lerp(
-                                        start = 0.5f,
-                                        stop = 1f,
-                                        fraction = 1f - pageOffset.coerceIn(0f, 1f)
-                                    )
-                                }) {
-                                    QuizList(tabData  ?: listOf())
+                                HomeCard(
+                                    title = "Quiz",
+                                    modifier = Modifier.graphicsLayer {
+                                        val pageOffset = (
+                                                (pagerState.currentPage - it) + pagerState
+                                                    .currentPageOffsetFraction
+                                                ).absoluteValue
+                                        alpha = lerp(
+                                            start = 0.5f,
+                                            stop = 1f,
+                                            fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                                        )
+                                    },
+                                    icon = Icons.Default.Refresh
+                                    ) {
+
+                                    QuizList(tabData ?: listOf())
                                     Spacer(modifier = Modifier.height(4.dp))
                                     CustomButtonV2(label = "Mark as Complete",
                                         icon = Icons.Default.Done,
                                         onClick = { /*TODO*/ })
                                 }
                             }
+
                             else -> {
                                 val tabData = content!![prompt] as String?
                                 HomeCard(title = prompt.pair.first) {
                                     RichText {
-                                        Markdown(content = tabData ?: "Unable to fetch data")
+                                        Markdown(content = tabData ?: "Unable to fetch data" )
                                     }
+                                    Spacer(modifier = Modifier.height(24.dp))
+                                    CustomButtonV2(label = "Refresh Content", icon = Icons.Default.Refresh , buttonColors = btnColor, onClick = {})
                                 }
                             }
                         }
                     }
+
                 }
+
             }
         }
     }
