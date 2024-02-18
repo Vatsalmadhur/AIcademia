@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.anurag.firebaseauthflow.common.Header
 
-@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
+@OptIn( ExperimentalMaterial3Api::class)
 @Composable
 fun HomeCard(title: String, onClick: () -> Unit, content: @Composable() () -> Unit) {
     Card(
