@@ -15,7 +15,7 @@ object NordColors {
     val Frost1 = Color(0xFF8FBCBB)
     val Frost2 = Color(0xFF88C0D0)
     val Frost3 = Color(0xFF81A1C1)
-    val Frost4 = Color(0xFF5E81AC)
+        val Frost4 = Color(0xFF5E81AC)
 
     val Aurora1 = Color(0xFFBF616A)
     val Aurora2 = Color(0xFFD08770)

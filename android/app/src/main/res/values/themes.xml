@@ -2,4 +2,12 @@
 <resources>
 
     <style name="Theme.FirebaseAuthFlow" parent="android:Theme.Material.Light.NoActionBar" />
+    //splash
+    <style name="Theme.MySplashScreen" parent="Theme.SplashScreen">
+        <item name="android:windowSplashScreenBackground">@color/grey</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/splash</item>
+        <item name="postSplashScreenTheme">@style/Theme.SplashScreen</item>
+    </style>
+
+    <style name="Theme.SplashScreen" parent="android:Theme.Material.Light.NoActionBar"/>
 </resources>
