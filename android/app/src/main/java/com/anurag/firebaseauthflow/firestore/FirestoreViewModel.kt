@@ -2,9 +2,13 @@ package com.anurag.firebaseauthflow.firestore
 
 import androidx.lifecycle.ViewModel
 import com.anurag.firebaseauthflow.auth.AuthViewModel
+import com.anurag.firebaseauthflow.doubtForm.CommentModel
+import com.anurag.firebaseauthflow.doubtForm.DoubtModel
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
+
+
 
 class FSViewModel : ViewModel() {
     val uid = AuthViewModel().getCurrentUser()?.data?.userId
@@ -12,6 +16,8 @@ class FSViewModel : ViewModel() {
     private val usersCollection = db.collection("users")
     private val contentCollection = db.collection("content")
     private val fcmCollection = db.collection("fcm-keys")
+    private val doubtsCollection = db.collection("posts")
+
 
     suspend fun getAbout(): About? {
         return try {

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowColumn
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,6 +22,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -34,12 +36,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.anurag.firebaseauthflow.common.Searchbar.SearchViewModel
+import com.anurag.firebaseauthflow.common.SkillCard
 import com.anurag.firebaseauthflow.common.SkillCardV2
-import androidx.compose.material3.Text
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun AutoComplete(searchVm: SearchViewModel = SearchViewModel()) {
+fun AutoComplete(searchVm: SearchViewModel = SearchViewModel(), useV1: Boolean = false) {
     val queryString by searchVm.query.collectAsState()
     val skills by searchVm.skills.collectAsState()
     val selected by searchVm.selected.collectAsState()
@@ -54,7 +56,7 @@ fun AutoComplete(searchVm: SearchViewModel = SearchViewModel()) {
                     keyboardOptions = KeyboardOptions.Default.copy(
                         keyboardType = KeyboardType.Text, imeAction = ImeAction.Go
                     ),
-                    label = { Text(text = "Start typing")},
+                    label = { Text(text = "Start typing") },
                     shape = RoundedCornerShape(16.dp),
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = MaterialTheme.colorScheme.background,
@@ -72,7 +74,7 @@ fun AutoComplete(searchVm: SearchViewModel = SearchViewModel()) {
                                     MaterialTheme.colorScheme.background
                                 ),
 
-                            ) {
+                                ) {
                                 Icon(imageVector = Icons.Default.Close, contentDescription = null)
                             }
                     },
@@ -86,17 +88,32 @@ fun AutoComplete(searchVm: SearchViewModel = SearchViewModel()) {
                 Icon(imageVector = Icons.Default.Done, contentDescription = null)
             }
         }
-        FlowColumn(
-            verticalArrangement = Arrangement.spacedBy(
-                6.dp,
-                alignment = Alignment.Top
-            )
-        ) {
-            skills.forEach {
-                SkillCardV2(skill = it, selected.contains(it), onClick = {
-                    searchVm.toggleSelection(it)
-                })
+        if (useV1) {
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(
+                    6.dp,
+                ),
+            ) {
+                skills.forEach {
+                    SkillCard(skill = it, selected = selected.contains(it)) {
+                        searchVm.toggleSelection(it)
+                    }
+                }
             }
+        } else {
+            FlowColumn(
+                verticalArrangement = Arrangement.spacedBy(
+                    6.dp,
+                    alignment = Alignment.Top
+                )
+            ) {
+                skills.forEach {
+                    SkillCardV2(skill = it, selected.contains(it), onClick = {
+                        searchVm.toggleSelection(it)
+                    })
+                }
+            }
+
         }
 
     }

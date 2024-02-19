@@ -10,7 +10,6 @@ import kotlinx.coroutines.tasks.await
 import java.util.concurrent.CancellationException
 
 class GoogleViewModel() : ViewModel() {
-
     val auth = Firebase.auth
     suspend fun signWithCredential(credential: AuthCredential): SignInResult {
         return try {

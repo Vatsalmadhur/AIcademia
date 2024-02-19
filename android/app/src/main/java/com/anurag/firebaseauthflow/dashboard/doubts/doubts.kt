@@ -19,11 +19,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.anurag.firebaseauthflow.dashboard.Navigation.Screens
 import com.anurag.firebaseauthflow.doubtCard.DoubtCard
 
 @Composable
-@Preview
-fun Doubts() {
+fun Doubts(navController: NavHostController) {
     var scrollState= rememberScrollState()
     Box (modifier = Modifier.fillMaxSize()){
     Column(
@@ -45,8 +46,7 @@ fun Doubts() {
                 .align(Alignment.BottomCenter)
         ) {
             FloatingActionButton(
-                onClick = { },
-//                modifier = Modifier.align(Alignment.CenterHorizontally),
+                onClick = { navController.navigate(Screens.NewDoubt.route) },
                 containerColor = MaterialTheme.colorScheme.error,
                 shape = MaterialTheme.shapes.extraLarge
 

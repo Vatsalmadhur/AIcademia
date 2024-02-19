@@ -4,6 +4,7 @@ import FirebaseAuthFlowTheme
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,6 +13,7 @@ import androidx.compose.material.icons.twotone.ExitToApp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -35,16 +37,24 @@ fun CustomButton(label: String, onClick: () -> Unit) {
 }
 
 @Composable
-fun CustomButtonV2(label: String, icon:ImageVector?, onClick: () -> Unit, buttonColors: ButtonColors = ButtonDefaults.buttonColors()){
+fun CustomButtonV2(label: String, icon:ImageVector?, isLoading:Boolean=false, onClick: () -> Unit, buttonColors: ButtonColors = ButtonDefaults.buttonColors()){
     Button(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
         colors = buttonColors,
         shape = RoundedCornerShape(4.dp)
     ) {
-        if (icon != null) {
-            Icon(imageVector = icon, contentDescription = null)
-            Spacer(modifier = Modifier.width(width = 8.dp))
+        if(isLoading){
+            CircularProgressIndicator(
+                color = MaterialTheme.colorScheme.primary,
+                trackColor = MaterialTheme.colorScheme.onPrimary,
+                modifier = Modifier.size(20.dp)
+            )
+        }else{
+            if (icon != null) {
+                Icon(imageVector = icon, contentDescription = null)
+                Spacer(modifier = Modifier.width(width = 8.dp))
+            }
         }
         Text(text = label)
     }

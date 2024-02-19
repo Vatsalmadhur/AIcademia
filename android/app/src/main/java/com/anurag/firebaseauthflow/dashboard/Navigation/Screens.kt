@@ -6,4 +6,6 @@ sealed class Screens(val route: String) {
     object Profile : Screens("profile")
     object PriorSkills : Screens("prior_skill")
     object NewSkill : Screens("new_skill")
+
+    object NewDoubt: Screens("new-doubt")
 }

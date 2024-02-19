@@ -17,6 +17,7 @@ import com.anurag.firebaseauthflow.auth.AuthViewModel
 import com.anurag.firebaseauthflow.dashboard.Home.Home
 import com.anurag.firebaseauthflow.dashboard.doubts.Doubts
 import com.anurag.firebaseauthflow.dashboard.profile.Profile
+import com.anurag.firebaseauthflow.doubtForm.NewDoubt
 
 @Composable
 fun Navigation_dash(navController: NavHostController, authVM: AuthViewModel) {
@@ -25,13 +26,13 @@ fun Navigation_dash(navController: NavHostController, authVM: AuthViewModel) {
     }
     Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface)) {
         NavHost(navController = navController, startDestination = startRoute.value) {
-            composable("home") {
+            composable(Screens.Home.route) {
                 Home(authVM, navController)
             }
-            composable("doubts") {
-                Doubts()
+            composable(Screens.Doubts.route) {
+                Doubts(navController)
             }
-            composable("profile") {
+            composable(Screens.Profile.route) {
                 Profile(authVM, navController)
             }
             composable(Screens.PriorSkills.route) {
@@ -39,6 +40,9 @@ fun Navigation_dash(navController: NavHostController, authVM: AuthViewModel) {
             }
             composable(Screens.NewSkill.route) {
                 NewSkill(navController)
+            }
+            composable(Screens.NewDoubt.route) {
+                NewDoubt(navController)
             }
         }
     }
