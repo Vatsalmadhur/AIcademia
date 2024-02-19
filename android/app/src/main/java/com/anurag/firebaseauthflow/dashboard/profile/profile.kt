@@ -43,6 +43,7 @@ import com.anurag.firebaseauthflow.common.CustomButtonV2
 import com.anurag.firebaseauthflow.common.InfoBar
 import com.anurag.firebaseauthflow.common.SkillCard
 import com.anurag.firebaseauthflow.common.card.HomeCardClickable
+import com.anurag.firebaseauthflow.common.userForm.userForm
 import com.anurag.firebaseauthflow.dashboard.Navigation.Screens
 import com.anurag.firebaseloginflow.presentation.sign_in.UserData
 import com.google.accompanist.glide.rememberGlidePainter
@@ -163,3 +164,4 @@ fun UserProfile(user: UserData) {
         }
     }
 }
+
