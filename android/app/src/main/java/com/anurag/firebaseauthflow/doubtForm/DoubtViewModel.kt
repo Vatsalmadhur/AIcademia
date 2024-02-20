@@ -26,22 +26,7 @@ class DoubtViewModel : ViewModel() {
     val prevStatus = _prevResStatus.asStateFlow()
 
 
-    private suspend fun postDoubtToDB(doubt: DoubtModel):Boolean{
-        try {
-            val id = uid ?: return false
-            doubt.uid = id
-            doubtsCollection.document().set(doubt).await()
-            return true
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return false
-        }
-
-    }
-
-
-
-    private suspend fun postComment(postId:String, comment: CommentModel):Boolean{
+    private suspend fun postComment(postId: String, comment: CommentModel): Boolean {
         try {
             val id = uid ?: return false
             comment.uid = id
@@ -63,6 +48,19 @@ class DoubtViewModel : ViewModel() {
 
     fun clear() {}
 
+    private suspend fun postDoubtToDB(doubt: DoubtModel): Boolean {
+        try {
+            val id = uid ?: return false
+            doubt.uid = id
+            doubtsCollection.document().set(doubt).await()
+            return true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return false
+        }
+
+    }
+
     suspend fun PostDoubt(): Boolean {
         _loading.value = true
         val doubtModel = DoubtModel(
@@ -75,7 +73,6 @@ class DoubtViewModel : ViewModel() {
         _loading.value = false
         return res
     }
-
 
 
 }

@@ -23,6 +23,7 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
@@ -77,6 +78,7 @@ fun Home(authVM: AuthViewModel, navController: NavHostController) {
     val content by homeVM.content.collectAsState()
     val loading by homeVM.isLoading.collectAsState()
     val pagerState = rememberPagerState { 5 }
+    val tabScroll = rememberScrollState()
     val scrollCoroutineScope = rememberCoroutineScope()
     LaunchedEffect(Unit) {
         homeVM.fetchContent()
@@ -104,7 +106,7 @@ fun Home(authVM: AuthViewModel, navController: NavHostController) {
             desc = "Let's begin today's learning session"
         )
         Divider(thickness = 4.dp, color = MaterialTheme.colorScheme.outline)
-        TabRow(selectedTabIndex = pagerState.currentPage, ) {
+        ScrollableTabRow(selectedTabIndex = pagerState.currentPage ) {
             cards.forEachIndexed{idx, tab ->
                 Tab(
                     selected = pagerState.currentPage == idx,

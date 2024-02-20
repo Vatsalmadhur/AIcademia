@@ -15,6 +15,7 @@ import com.anurag.firebaseauthflow.SkillChooser.priorskills.NewSkill
 import com.anurag.firebaseauthflow.SkillChooser.priorskills.PriorSkills
 import com.anurag.firebaseauthflow.auth.AuthViewModel
 import com.anurag.firebaseauthflow.dashboard.Home.Home
+import com.anurag.firebaseauthflow.dashboard.doubts.DoubtDetails
 import com.anurag.firebaseauthflow.dashboard.doubts.Doubts
 import com.anurag.firebaseauthflow.dashboard.profile.Profile
 import com.anurag.firebaseauthflow.doubtForm.NewDoubt
@@ -24,7 +25,9 @@ fun Navigation_dash(navController: NavHostController, authVM: AuthViewModel) {
     val startRoute = remember {
         mutableStateOf("home")
     }
-    Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface)) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(MaterialTheme.colorScheme.surface)) {
         NavHost(navController = navController, startDestination = startRoute.value) {
             composable(Screens.Home.route) {
                 Home(authVM, navController)
@@ -43,6 +46,10 @@ fun Navigation_dash(navController: NavHostController, authVM: AuthViewModel) {
             }
             composable(Screens.NewDoubt.route) {
                 NewDoubt(navController)
+            }
+
+            composable(Screens.DoubtDetails.route.plus("/{doubtId}")){
+                DoubtDetails(doubtId = it.arguments?.getString("doubtId"), navController = navController)
             }
         }
     }
