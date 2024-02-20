@@ -171,23 +171,23 @@ fun Home(authVM: AuthViewModel, navController: NavHostController) {
                                     },
                                     icon = Icons.Default.Refresh,
                                     iconOnClick = {
-                                        if(!quizLoading)
-                                        scope.launch {
-                                            val res = gemini.enqueueQuiz()
-                                            if (res == null) {
-                                                Toast.makeText(
-                                                    ctx,
-                                                    "Error while connecting to server!",
-                                                    Toast.LENGTH_LONG
-                                                ).show()
-                                            } else {
-                                                Toast.makeText(
-                                                    ctx,
-                                                    if (res.status) "Refreshing quiz! You'll be notified when its done" else res.message,
-                                                    Toast.LENGTH_LONG
-                                                ).show()
+                                        if (!quizLoading)
+                                            scope.launch {
+                                                val res = gemini.enqueueQuiz()
+                                                if (res == null) {
+                                                    Toast.makeText(
+                                                        ctx,
+                                                        "Error while connecting to server!",
+                                                        Toast.LENGTH_LONG
+                                                    ).show()
+                                                } else {
+                                                    Toast.makeText(
+                                                        ctx,
+                                                        if (res.status) "Refreshing quiz! You'll be notified when its done" else res.message,
+                                                        Toast.LENGTH_LONG
+                                                    ).show()
+                                                }
                                             }
-                                        }
                                     }
                                 ) {
 
@@ -233,7 +233,6 @@ fun Home(authVM: AuthViewModel, navController: NavHostController) {
                             }
                         }
                     }
-
                 }
 
             }
