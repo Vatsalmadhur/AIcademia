@@ -1,9 +1,9 @@
 package com.anurag.firebaseauthflow.dashboard.Home
 
+import android.widget.Toast
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowColumn
@@ -22,10 +22,10 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -36,17 +36,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.anurag.firebaseauthflow.R
 import com.anurag.firebaseauthflow.auth.AuthViewModel
-import com.anurag.firebaseauthflow.common.CustomButton
 import com.anurag.firebaseauthflow.common.CustomButtonV2
 import com.anurag.firebaseauthflow.common.Header
 import com.anurag.firebaseauthflow.common.InfoBar
@@ -73,13 +70,17 @@ fun Home(authVM: AuthViewModel, navController: NavHostController) {
     val authStatus by authVM.currentUser.collectAsState()
     val fs: SkillsViewModel = viewModel()
     val homeVM: homeViewModel = viewModel()
+    val gemini: GeminiViewModel = viewModel()
     val db: FSViewModel = viewModel()
     val skills by fs.skills.collectAsState()
     val content by homeVM.content.collectAsState()
     val loading by homeVM.isLoading.collectAsState()
     val pagerState = rememberPagerState { 5 }
-    val tabScroll = rememberScrollState()
-    val scrollCoroutineScope = rememberCoroutineScope()
+    val scope = rememberCoroutineScope()
+    val ctx = LocalContext.current
+    val quizLoading by gemini.isQuizLoading.collectAsState()
+    val contentLoading by gemini.isContentLoading.collectAsState()
+
     LaunchedEffect(Unit) {
         homeVM.fetchContent()
         val str = FirebaseMessaging.getInstance().token.await()
@@ -101,23 +102,29 @@ fun Home(authVM: AuthViewModel, navController: NavHostController) {
             .verticalScroll(scrollState),
         verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top)
     ) {
+        if (loading || quizLoading || contentLoading)
+            LinearProgressIndicator()
         Header(
             title = "Hello ${authStatus.data?.username?.split(" ")?.get(0) ?: ""}",
             desc = "Let's begin today's learning session"
         )
         Divider(thickness = 4.dp, color = MaterialTheme.colorScheme.outline)
-        ScrollableTabRow(selectedTabIndex = pagerState.currentPage ) {
-            cards.forEachIndexed{idx, tab ->
+        ScrollableTabRow(selectedTabIndex = pagerState.currentPage) {
+            cards.forEachIndexed { idx, tab ->
                 Tab(
                     selected = pagerState.currentPage == idx,
-                    onClick = {scrollCoroutineScope.launch {
-                        pagerState.animateScrollToPage(idx)
-                    }},
-                    text = { Text(
-                        text = tab.pair.first,
-                        maxLines = 1,
-                        overflow = TextOverflow.Visible
-                    )}
+                    onClick = {
+                        scope.launch {
+                            pagerState.animateScrollToPage(idx)
+                        }
+                    },
+                    text = {
+                        Text(
+                            text = tab.pair.first,
+                            maxLines = 1,
+                            overflow = TextOverflow.Visible
+                        )
+                    }
                 )
             }
         }
@@ -162,8 +169,27 @@ fun Home(authVM: AuthViewModel, navController: NavHostController) {
                                             fraction = 1f - pageOffset.coerceIn(0f, 1f)
                                         )
                                     },
-                                    icon = Icons.Default.Refresh
-                                    ) {
+                                    icon = Icons.Default.Refresh,
+                                    iconOnClick = {
+                                        if(!quizLoading)
+                                        scope.launch {
+                                            val res = gemini.enqueueQuiz()
+                                            if (res == null) {
+                                                Toast.makeText(
+                                                    ctx,
+                                                    "Error while connecting to server!",
+                                                    Toast.LENGTH_LONG
+                                                ).show()
+                                            } else {
+                                                Toast.makeText(
+                                                    ctx,
+                                                    if (res.status) "Refreshing quiz! You'll be notified when its done" else res.message,
+                                                    Toast.LENGTH_LONG
+                                                ).show()
+                                            }
+                                        }
+                                    }
+                                ) {
 
                                     QuizList(tabData ?: listOf())
                                     Spacer(modifier = Modifier.height(4.dp))
@@ -177,10 +203,32 @@ fun Home(authVM: AuthViewModel, navController: NavHostController) {
                                 val tabData = content!![prompt] as String?
                                 HomeCard(title = prompt.pair.first) {
                                     RichText {
-                                        Markdown(content = tabData ?: "Unable to fetch data" )
+                                        Markdown(content = tabData ?: "Unable to fetch data")
                                     }
                                     Spacer(modifier = Modifier.height(24.dp))
-                                    CustomButtonV2(label = "Refresh Content", icon = Icons.Default.Refresh , buttonColors = btnColor, onClick = {})
+                                    CustomButtonV2(
+                                        label = "Refresh Content",
+                                        icon = Icons.Default.Refresh,
+                                        buttonColors = btnColor,
+                                        isLoading = contentLoading,
+                                        onClick = {
+                                            scope.launch {
+                                                val res = gemini.enqueueContent()
+                                                if (res == null) {
+                                                    Toast.makeText(
+                                                        ctx,
+                                                        "Error while connecting to server!",
+                                                        Toast.LENGTH_LONG
+                                                    ).show()
+                                                } else {
+                                                    Toast.makeText(
+                                                        ctx,
+                                                        if (res.status) "Refreshing content! You'll be notified when its done" else res.message,
+                                                        Toast.LENGTH_LONG
+                                                    ).show()
+                                                }
+                                            }
+                                        })
                                 }
                             }
                         }

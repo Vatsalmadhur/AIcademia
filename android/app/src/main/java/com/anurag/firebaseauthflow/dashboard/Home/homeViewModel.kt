@@ -2,6 +2,7 @@ package com.anurag.firebaseauthflow.dashboard.Home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.anurag.firebaseauthflow.api.client.api.GeminiApi
 import com.anurag.firebaseauthflow.firestore.Content
 import com.anurag.firebaseauthflow.firestore.FSViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

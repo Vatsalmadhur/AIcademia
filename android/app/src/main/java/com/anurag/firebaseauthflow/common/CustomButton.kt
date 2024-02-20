@@ -42,7 +42,8 @@ fun CustomButtonV2(label: String, icon:ImageVector?, isLoading:Boolean=false, on
         onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
         colors = buttonColors,
-        shape = RoundedCornerShape(4.dp)
+        shape = RoundedCornerShape(4.dp),
+        enabled = !isLoading
     ) {
         if(isLoading){
             CircularProgressIndicator(

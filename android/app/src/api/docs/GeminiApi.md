@@ -4,8 +4,8 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**geminiControllerGetContent**](GeminiApi.md#geminiControllerGetContent) | **GET** content | 
-[**geminiControllerUpdateContent**](GeminiApi.md#geminiControllerUpdateContent) | **GET** update_content | 
+[**geminiControllerEnqueueContentGen**](GeminiApi.md#geminiControllerEnqueueContentGen) | **POST** enqueue_content | 
+[**geminiControllerEnqueueQuizGen**](GeminiApi.md#geminiControllerEnqueueQuizGen) | **POST** enqueue_quiz | 
 
 
 
@@ -20,20 +20,20 @@ Method | HTTP request | Description
 
 val apiClient = ApiClient()
 val webService = apiClient.createWebservice(GeminiApi::class.java)
-val id : kotlin.String = id_example // kotlin.String | 
+val queueMessage : QueueMessage =  // QueueMessage | 
 
-val result : GetContentResponse = webService.geminiControllerGetContent(id)
+val result : GetQuizResponse = webService.geminiControllerEnqueueContentGen(queueMessage)
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **kotlin.String**|  |
+ **queueMessage** | [**QueueMessage**](QueueMessage.md)|  |
 
 ### Return type
 
-[**GetContentResponse**](GetContentResponse.md)
+[**GetQuizResponse**](GetQuizResponse.md)
 
 ### Authorization
 
@@ -41,7 +41,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 
@@ -56,20 +56,20 @@ No authorization required
 
 val apiClient = ApiClient()
 val webService = apiClient.createWebservice(GeminiApi::class.java)
-val id : kotlin.String = id_example // kotlin.String | 
+val queueMessage : QueueMessage =  // QueueMessage | 
 
-val result : ApiResponseModel = webService.geminiControllerUpdateContent(id)
+val result : GetQuizResponse = webService.geminiControllerEnqueueQuizGen(queueMessage)
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **kotlin.String**|  |
+ **queueMessage** | [**QueueMessage**](QueueMessage.md)|  |
 
 ### Return type
 
-[**ApiResponseModel**](ApiResponseModel.md)
+[**GetQuizResponse**](GetQuizResponse.md)
 
 ### Authorization
 
@@ -77,6 +77,6 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 

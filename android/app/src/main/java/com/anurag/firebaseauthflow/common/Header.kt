@@ -45,7 +45,7 @@ fun Header(title: String, desc:String = "", icon:ImageVector? = null, iconOnClic
                     fontWeight = FontWeight.Light
                 )
                 if(icon!=null){
-                    IconButton(onClick = { iconOnClick }) {
+                    IconButton(onClick =  iconOnClick ) {
                         Icon(imageVector = icon, contentDescription = null)
                     }
                 }

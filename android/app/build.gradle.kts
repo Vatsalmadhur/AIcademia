@@ -92,10 +92,13 @@ dependencies {
     implementation("com.halilibo.compose-richtext:richtext-ui-material3:0.20.0")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.moshi:moshi:1.15.0")
+   implementation("com.squareup.moshi:moshi-kotlin:1.15.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     implementation("com.squareup.retrofit2:converter-gson:2.1.0")
     implementation("androidx.compose.ui:ui-util")
-    //splash screen api
+    implementation("com.squareup.moshi:moshi-adapters:1.13.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
     implementation("androidx.core:core-splashscreen:1.0.1")
 }
