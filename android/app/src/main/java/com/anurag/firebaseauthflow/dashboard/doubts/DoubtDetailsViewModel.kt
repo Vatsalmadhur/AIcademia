@@ -76,6 +76,7 @@ class DoubtDetailsViewModel: ViewModel() {
             _loadingComments.value = true
             val res = query!!.get().await()
             val ret = mutableListOf<CommentModel>()
+            println(res.documents.size)
             res.documents.forEach {
                 if (it.exists()) {
                     val comment = it.toObject(CommentModel::class.java)
