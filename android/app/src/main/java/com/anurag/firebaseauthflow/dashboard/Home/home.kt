@@ -103,7 +103,7 @@ fun Home(authVM: AuthViewModel, navController: NavHostController) {
         verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top)
     ) {
         if (loading || quizLoading || contentLoading)
-            LinearProgressIndicator()
+            LinearProgressIndicator(Modifier.fillMaxWidth())
         Header(
             title = "Hello ${authStatus.data?.username?.split(" ")?.get(0) ?: ""}",
             desc = "Let's begin today's learning session"

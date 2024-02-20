@@ -63,14 +63,13 @@ fun DoubtCard(doubtModel:DoubtModel, navController: NavController) {
                 style = TextStyle(
                     fontWeight = FontWeight.Bold
                 ),
-                maxLines = 2,
                 fontSize = 18.sp
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = doubtModel.desc,
                 fontSize = 16.sp,
-                maxLines = 2,
+                maxLines = 3,
                 overflow = TextOverflow.Ellipsis
             )
 

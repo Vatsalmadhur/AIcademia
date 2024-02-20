@@ -80,7 +80,7 @@ fun Profile(authVM: AuthViewModel, navController: NavHostController) {
             )
         }
 
-        HomeCardClickable(title = "Acquired Skills", onClick = {
+        HomeCardClickable(title = "Acquired Skills", desc = "Choose the skills you are familiar with", onClick = {
             navController.navigate(Screens.PriorSkills.route)
         }) {
             FlowRow(
@@ -91,11 +91,11 @@ fun Profile(authVM: AuthViewModel, navController: NavHostController) {
                     skills.acquired_skills?.forEach {
                         SkillCard(skill = it, onClick = {}, selected = true, disabled = true)
                     } else
-                    InfoBar(text = "Click to add")
+                    InfoBar(text = "Click to add",)
             }
         }
 
-        HomeCardClickable(title = "Currently Learning", onClick = {
+        HomeCardClickable(title = "Currently Learning", desc = "Choose the skill you want to learn", onClick = {
             navController.navigate(Screens.NewSkill.route)
         }) {
             FlowRow(

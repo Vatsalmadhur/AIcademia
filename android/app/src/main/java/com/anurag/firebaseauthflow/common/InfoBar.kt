@@ -29,7 +29,8 @@ fun InfoBar(text: String) {
             modifier = Modifier.align(
                 Alignment.Center
             ),
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.titleLarge,
+
         )
     }
 }
