@@ -26,6 +26,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -46,7 +47,7 @@ fun NewDoubt(navController: NavHostController) {
     val scope = rememberCoroutineScope()
     val fieldColors = TextFieldDefaults.outlinedTextFieldColors(
         focusedBorderColor = MaterialTheme.colorScheme.primary,
-        unfocusedBorderColor = MaterialTheme.colorScheme.secondary
+        unfocusedBorderColor = MaterialTheme.colorScheme.outline
     )
 
     FlowColumn(
@@ -57,7 +58,7 @@ fun NewDoubt(navController: NavHostController) {
         verticalArrangement = Arrangement.Top,
     ) {
         Text(
-            text = "Create new doubt",
+            text = "Ask the Community",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(bottom = 16.dp),
 
@@ -65,7 +66,7 @@ fun NewDoubt(navController: NavHostController) {
         OutlinedTextField(
             value = title,
             onValueChange = { doubtVM.setTitle(it) },
-            label = { Text("Heading") },
+            label = { Text("Heading (Keep it short and sweet!)") },
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(10.dp))

@@ -47,7 +47,7 @@ import okhttp3.internal.wait
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeCardClickable(title: String, onClick: () -> Unit, content: @Composable() () -> Unit) {
+fun HomeCardClickable(title: String,desc:String="", onClick: () -> Unit, content: @Composable() () -> Unit) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
@@ -61,7 +61,7 @@ fun HomeCardClickable(title: String, onClick: () -> Unit, content: @Composable()
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
-            Header(title = title)
+            Header(title = title, desc = desc)
             Divider()
             Spacer(modifier = Modifier.height(8.dp))
             content()

@@ -41,12 +41,12 @@ import com.anurag.firebaseauthflow.common.SkillCardV2
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun AutoComplete(searchVm: SearchViewModel = SearchViewModel(), useV1: Boolean = false) {
+fun AutoComplete(searchVm: SearchViewModel = SearchViewModel(), useV1: Boolean = false,placeHolder:String="Start Typ") {
     val queryString by searchVm.query.collectAsState()
     val skills by searchVm.skills.collectAsState()
     val selected by searchVm.selected.collectAsState()
 
-    Column {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Row(modifier = Modifier.fillMaxWidth()) {
             Box(modifier = Modifier.weight(1f, true)) {
                 TextField(
@@ -56,7 +56,7 @@ fun AutoComplete(searchVm: SearchViewModel = SearchViewModel(), useV1: Boolean =
                     keyboardOptions = KeyboardOptions.Default.copy(
                         keyboardType = KeyboardType.Text, imeAction = ImeAction.Go
                     ),
-                    label = { Text(text = "Start typing") },
+                    label = { Text(text = placeHolder) },
                     shape = RoundedCornerShape(16.dp),
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = MaterialTheme.colorScheme.background,
