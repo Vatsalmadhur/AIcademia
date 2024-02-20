@@ -14,6 +14,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.Done
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -88,7 +90,7 @@ fun NewDoubt(navController: NavHostController) {
         CustomButtonV2(
             label = "POST",
             isLoading = loading,
-            icon = Icons.Default.AddCircle,
+            icon = null,
             onClick = {
                 scope.launch {
                     val res = doubtVM.PostDoubt()
@@ -99,7 +101,7 @@ fun NewDoubt(navController: NavHostController) {
                         Toast.makeText(ctx, "Error posting doubt! Please try again", Toast.LENGTH_LONG).show()
                     }
                 }
-            }
+            }, buttonColors =  ButtonDefaults.buttonColors(MaterialTheme.colorScheme.outline)
         )
     }
 }
