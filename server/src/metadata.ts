@@ -1,0 +1,5 @@
+/* eslint-disable */
+export default async () => {
+    const t = {};
+    return { "@nestjs/swagger": { "models": [[import("./gemini/dto/ContentModel.dto"), { "ContentModel": { id: { required: true, type: () => String }, content: { required: true, type: () => ({ intro: { required: true, type: () => String }, goals: { required: true, type: () => String }, advice: { required: true, type: () => String }, resources: { required: true, type: () => String } }) } } }], [import("./gemini/dto/UserModel.dto"), { "UserModel": { acquired_skills: { required: true, type: () => [String] }, current_skill: { required: true, type: () => String }, id: { required: true, type: () => String } } }]], "controllers": [[import("./app.controller"), { "AppController": { "getHello": { type: String } } }], [import("./gemini/gemini.controller"), { "GeminiController": { "getContent": { type: Object }, "updateContent": { type: Object } } }]] } };
+};
