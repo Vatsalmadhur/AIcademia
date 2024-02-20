@@ -8,11 +8,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.outlined.ThumbUp
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -39,10 +42,22 @@ fun commentComponent(comment:CommentModel){
                 Column(Modifier.padding(8.dp)) {
                     Text(text = "@"+comment.uid.toString(), style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.outline)
                     Text(text = comment.body,style = MaterialTheme.typography.titleMedium)
-                    Row (Modifier.width(80.dp).padding(top = 4.dp, bottom = 4.dp), horizontalArrangement = Arrangement.SpaceBetween){
-                        Text(text = "Likes:" + comment.votes, style = MaterialTheme.typography.bodyLarge)
-                        IconButton(onClick = { /* doSomething() */ }, modifier = Modifier.size(20.dp)) {
-                            Icon(Icons.Outlined.ThumbUp, contentDescription = "Localized description")
+                    Box(modifier = Modifier.background(MaterialTheme.colorScheme.tertiary,
+                        RoundedCornerShape(16.dp)
+                    ),)
+                    Row (
+                        Modifier
+                            .width(85.dp)
+                            .height(40.dp)
+                            .padding(top = 4.dp, bottom = 4.dp)
+                            .background(MaterialTheme.colorScheme.tertiary, RoundedCornerShape(20.dp))
+                        , horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically){
+                        IconButton(onClick = { /* doSomething() */ }, modifier = Modifier.size(24.dp)) {
+                            Icon(Icons.Filled.KeyboardArrowUp, contentDescription = "Localized description")
+                        }
+                        Text(text = comment.votes.toString())
+                        IconButton(onClick = { /* doSomething() */ }, modifier = Modifier.size(24.dp)) {
+                            Icon(Icons.Filled.KeyboardArrowDown, contentDescription = "Localized description")
                         }
                     }
                 }

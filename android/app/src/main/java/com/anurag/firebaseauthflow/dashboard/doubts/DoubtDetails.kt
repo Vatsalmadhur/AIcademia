@@ -1,8 +1,12 @@
 package com.anurag.firebaseauthflow.dashboard.doubts
 
 import FirebaseAuthFlowTheme
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -13,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.anurag.firebaseauthflow.common.CustomButton
@@ -41,7 +46,9 @@ fun DoubtDetails(doubtId: String?, navController: NavHostController) {
         return
     }
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .verticalScroll(rememberScrollState())) {
         if(isLoadingPost){
             CircularProgressIndicator()
         }else{
@@ -52,11 +59,13 @@ fun DoubtDetails(doubtId: String?, navController: NavHostController) {
             if(isLoadingComments){
                 CircularProgressIndicator()
             }else{
-                CustomButton(label = "Load more") {
-                    scope.launch{
-                        detailsVM.getComments()
-                    }
-                }
+               Box(modifier = Modifier.padding(start = 8.dp)) {
+                   CustomButton(label = "Load more") {
+                       scope.launch {
+                           detailsVM.getComments()
+                       }
+                   }
+               }
             }
         }
     }
