@@ -38,6 +38,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
@@ -57,7 +59,9 @@ import com.anurag.firebaseauthflow.firestore.FSViewModel
 import com.anurag.firebaseauthflow.firestore.QuizModel
 import com.google.firebase.messaging.FirebaseMessaging
 import com.halilibo.richtext.markdown.Markdown
+import com.halilibo.richtext.ui.RichTextStyle
 import com.halilibo.richtext.ui.material3.RichText
+import com.halilibo.richtext.ui.string.RichTextStringStyle
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlin.math.absoluteValue
@@ -171,23 +175,23 @@ fun Home(authVM: AuthViewModel, navController: NavHostController) {
                                     },
                                     icon = Icons.Default.Refresh,
                                     iconOnClick = {
-                                        if(!quizLoading)
-                                        scope.launch {
-                                            val res = gemini.enqueueQuiz()
-                                            if (res == null) {
-                                                Toast.makeText(
-                                                    ctx,
-                                                    "Error while connecting to server!",
-                                                    Toast.LENGTH_LONG
-                                                ).show()
-                                            } else {
-                                                Toast.makeText(
-                                                    ctx,
-                                                    if (res.status) "Refreshing quiz! You'll be notified when its done" else res.message,
-                                                    Toast.LENGTH_LONG
-                                                ).show()
+                                        if (!quizLoading)
+                                            scope.launch {
+                                                val res = gemini.enqueueQuiz()
+                                                if (res == null) {
+                                                    Toast.makeText(
+                                                        ctx,
+                                                        "Error while connecting to server!",
+                                                        Toast.LENGTH_LONG
+                                                    ).show()
+                                                } else {
+                                                    Toast.makeText(
+                                                        ctx,
+                                                        if (res.status) "Refreshing quiz! You'll be notified when its done" else res.message,
+                                                        Toast.LENGTH_LONG
+                                                    ).show()
+                                                }
                                             }
-                                        }
                                     }
                                 ) {
 
@@ -202,7 +206,15 @@ fun Home(authVM: AuthViewModel, navController: NavHostController) {
                             else -> {
                                 val tabData = content!![prompt] as String?
                                 HomeCard(title = prompt.pair.first) {
-                                    RichText {
+                                    RichText(style = RichTextStyle(
+                                        stringStyle = RichTextStringStyle(
+                                            linkStyle = SpanStyle(
+                                                color = MaterialTheme.colorScheme.outline,
+                                                textDecoration = TextDecoration.Underline
+                                            )
+                                        )
+                                    )
+                                    ) {
                                         Markdown(content = tabData ?: "Unable to fetch data")
                                     }
                                     Spacer(modifier = Modifier.height(24.dp))
@@ -233,7 +245,6 @@ fun Home(authVM: AuthViewModel, navController: NavHostController) {
                             }
                         }
                     }
-
                 }
 
             }

@@ -42,7 +42,9 @@ import com.anurag.firebaseauthflow.common.SkillCardV2
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun AutoComplete(searchVm: SearchViewModel = SearchViewModel(), useV1: Boolean = false,placeHolder:String="Click To Add") {
+
+fun AutoComplete(searchVm: SearchViewModel = SearchViewModel(), useV1: Boolean = false,placeHolder:String="Start Typing") {
+
     val queryString by searchVm.query.collectAsState()
     val skills by searchVm.skills.collectAsState()
     val selected by searchVm.selected.collectAsState()

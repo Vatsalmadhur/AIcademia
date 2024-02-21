@@ -1,6 +1,5 @@
 package com.anurag.firebaseauthflow.doubtForm
 
-import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -28,7 +27,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -94,11 +92,15 @@ fun NewDoubt(navController: NavHostController) {
             onClick = {
                 scope.launch {
                     val res = doubtVM.PostDoubt()
-                    if (res){
+                    if (res) {
                         navController.popBackStack()
                         Toast.makeText(ctx, "Doubt posted successfully!", Toast.LENGTH_LONG).show()
-                    }else{
-                        Toast.makeText(ctx, "Error posting doubt! Please try again", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(
+                            ctx,
+                            "Error posting doubt! Please try again",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 }
             }, buttonColors =  ButtonDefaults.buttonColors(MaterialTheme.colorScheme.outline)
