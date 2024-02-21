@@ -173,8 +173,9 @@ fun Home(authVM: AuthViewModel, navController: NavHostController) {
                                             fraction = 1f - pageOffset.coerceIn(0f, 1f)
                                         )
                                     },
-                                    icon = Icons.Default.Refresh,
-                                    iconOnClick = {
+                                ) {
+
+                                    QuizList(tabData ?: listOf(), refreshQuiz = {
                                         if (!quizLoading)
                                             scope.launch {
                                                 val res = gemini.enqueueQuiz()
@@ -192,14 +193,7 @@ fun Home(authVM: AuthViewModel, navController: NavHostController) {
                                                     ).show()
                                                 }
                                             }
-                                    }
-                                ) {
-
-                                    QuizList(tabData ?: listOf())
-                                    Spacer(modifier = Modifier.height(4.dp))
-                                    CustomButtonV2(label = "Mark as Complete",
-                                        icon = Icons.Default.Done,
-                                        onClick = { /*TODO*/ })
+                                    })
                                 }
                             }
 
