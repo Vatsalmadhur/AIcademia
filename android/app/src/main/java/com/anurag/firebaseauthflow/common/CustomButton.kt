@@ -30,9 +30,9 @@ fun CustomButton(label: String, onClick: () -> Unit) {
     OutlinedButton(
         onClick = onClick,
         modifier = Modifier.widthIn(0.dp, 200.dp),
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(8.dp),
     ) {
-        Text(text = label, style = MaterialTheme.typography.bodyLarge)
+        Text(text = label, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.outline)
     }
 }
 

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -41,13 +42,15 @@ import com.anurag.firebaseauthflow.common.SkillCardV2
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
+
 fun AutoComplete(searchVm: SearchViewModel = SearchViewModel(), useV1: Boolean = false,placeHolder:String="Start Typing") {
+
     val queryString by searchVm.query.collectAsState()
     val skills by searchVm.skills.collectAsState()
     val selected by searchVm.selected.collectAsState()
 
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Row(modifier = Modifier.fillMaxWidth()) {
+        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Box(modifier = Modifier.weight(1f, true)) {
                 TextField(
                     value = queryString,
@@ -85,7 +88,9 @@ fun AutoComplete(searchVm: SearchViewModel = SearchViewModel(), useV1: Boolean =
             IconButton(onClick = {
                 searchVm.save()
             }, modifier = Modifier.width(50.dp)) {
-                Icon(imageVector = Icons.Default.Done, contentDescription = null)
+                Icon(imageVector = Icons.Default.Done, contentDescription = null,Modifier.size(40.dp).background(MaterialTheme.colorScheme.outline,
+                    RoundedCornerShape(100)
+                ))
             }
         }
         if (useV1) {
