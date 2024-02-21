@@ -146,6 +146,30 @@ fun Home(authVM: AuthViewModel, navController: NavHostController) {
                 CustomButtonV2(label = "Reload",
                     icon = Icons.Default.Refresh,
                     onClick = { homeVM.fetchContent() })
+
+                CustomButtonV2(
+                    label = "Refresh Content",
+                    icon = Icons.Default.Refresh,
+                    buttonColors = btnColor,
+                    isLoading = contentLoading,
+                    onClick = {
+                        scope.launch {
+                            val res = gemini.enqueueContent()
+                            if (res == null) {
+                                Toast.makeText(
+                                    ctx,
+                                    "Error while connecting to server!",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            } else {
+                                Toast.makeText(
+                                    ctx,
+                                    if (res.status) "Refreshing content! You'll be notified when its done" else res.message,
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+                    })
             } else {
                 HorizontalPager(
                     state = pagerState,
