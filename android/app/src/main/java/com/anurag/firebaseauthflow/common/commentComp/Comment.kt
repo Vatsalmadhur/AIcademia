@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowColumn
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -91,7 +92,6 @@ fun Comment(comment: CommentModel) {
         Row(
             Modifier
                 .clip(RoundedCornerShape(100))
-                .background(MaterialTheme.colorScheme.primary)
                 .padding(2.dp, 0.dp),
             horizontalArrangement = Arrangement.spacedBy(4.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -100,15 +100,13 @@ fun Comment(comment: CommentModel) {
                 Icon(
                     Icons.Filled.KeyboardArrowUp,
                     contentDescription = "Upvote",
-                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
-            Text(text = comment.votes.toString(), color = MaterialTheme.colorScheme.onPrimary)
+            Text(text = comment.votes.toString(), )
             IconButton(onClick = {}) {
                 Icon(
                     Icons.Filled.KeyboardArrowDown,
                     contentDescription = "Down vote",
-                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
         }

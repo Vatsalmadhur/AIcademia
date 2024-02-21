@@ -57,7 +57,10 @@ fun AddComment(onSubmit:(str:String)->Unit) {
 
         Column(verticalArrangement = Arrangement.Top, modifier = Modifier.fillMaxHeight()) {
             IconButton(
-                onClick = {onSubmit(str.value)} , modifier = Modifier
+                onClick = {
+                    onSubmit(str.value)
+                          str.value = ""
+                          } , modifier = Modifier
                     .size(50.dp)
                     .background(
                         MaterialTheme.colorScheme.primary,
