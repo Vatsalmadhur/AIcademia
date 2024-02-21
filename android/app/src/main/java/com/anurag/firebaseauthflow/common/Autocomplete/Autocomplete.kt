@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -43,14 +42,22 @@ import com.anurag.firebaseauthflow.common.SkillCardV2
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 
-fun AutoComplete(searchVm: SearchViewModel = SearchViewModel(), useV1: Boolean = false,placeHolder:String="Start Typing") {
+fun AutoComplete(
+    searchVm: SearchViewModel = SearchViewModel(),
+    useV1: Boolean = false,
+    placeHolder: String = "Start Typing"
+) {
 
     val queryString by searchVm.query.collectAsState()
     val skills by searchVm.skills.collectAsState()
     val selected by searchVm.selected.collectAsState()
 
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             Box(modifier = Modifier.weight(1f, true)) {
                 TextField(
                     value = queryString,
@@ -60,7 +67,7 @@ fun AutoComplete(searchVm: SearchViewModel = SearchViewModel(), useV1: Boolean =
                         keyboardType = KeyboardType.Text, imeAction = ImeAction.Go
                     ),
                     label = { Text(text = placeHolder) },
-                    shape = RoundedCornerShape(16.dp),
+                    shape = RoundedCornerShape(8.dp),
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = MaterialTheme.colorScheme.background,
                         unfocusedContainerColor = MaterialTheme.colorScheme.background,
@@ -85,12 +92,23 @@ fun AutoComplete(searchVm: SearchViewModel = SearchViewModel(), useV1: Boolean =
                     singleLine = true
                 )
             }
-            IconButton(onClick = {
-                searchVm.save()
-            }, modifier = Modifier.width(50.dp)) {
-                Icon(imageVector = Icons.Default.Done, contentDescription = null,Modifier.size(40.dp).background(MaterialTheme.colorScheme.outline,
-                    RoundedCornerShape(100)
-                ))
+            IconButton(
+                onClick = {
+                    searchVm.save()
+                }, modifier = Modifier
+                    .size(50.dp)
+                    .background(
+                        MaterialTheme.colorScheme.primary,
+                        RoundedCornerShape(100)
+                    )
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Done,
+                    tint = MaterialTheme.colorScheme.onPrimary,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(32.dp)
+                )
             }
         }
         if (useV1) {

@@ -15,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -24,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
@@ -32,6 +34,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.anurag.firebaseauthflow.SkillChooser.SkillChooser
 import com.anurag.firebaseauthflow.common.CustomButtonV2
+import com.anurag.firebaseauthflow.common.Header
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -55,23 +58,21 @@ fun NewDoubt(navController: NavHostController) {
             .fillMaxSize()
             .verticalScroll(scrollState)
             .padding(16.dp),
-        verticalArrangement = Arrangement.Top,
+        verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.Top),
     ) {
-        Text(
-            text = "Ask the Community",
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(bottom = 16.dp),
-
-            )
+        Header(
+            title = "Ask the community",
+            desc = "Get your doubts resolved by other learners. Make sure to express your doubts as clearly as possible"
+        )
+        Divider(thickness = 4.dp, color = MaterialTheme.colorScheme.outline)
         OutlinedTextField(
             value = title,
             onValueChange = { doubtVM.setTitle(it) },
             label = { Text("Heading (Keep it short and sweet!)") },
             modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(10.dp))
-                .padding(bottom = 16.dp),
-            colors = fieldColors
+                .fillMaxWidth(),
+            colors = fieldColors,
+            shape = RoundedCornerShape(8.dp)
         )
         OutlinedTextField(
             value = desc,
@@ -79,9 +80,9 @@ fun NewDoubt(navController: NavHostController) {
             label = { Text("What do you wanna ask?") },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp)
                 .height(200.dp),
-            colors = fieldColors
+            colors = fieldColors,
+            shape = RoundedCornerShape(8.dp)
         )
 
         SkillChooser(searchVM = searchVM, useV1 = true, skills = listOf())
@@ -103,7 +104,7 @@ fun NewDoubt(navController: NavHostController) {
                         ).show()
                     }
                 }
-            }, buttonColors =  ButtonDefaults.buttonColors(MaterialTheme.colorScheme.outline)
+            },
         )
     }
 }
