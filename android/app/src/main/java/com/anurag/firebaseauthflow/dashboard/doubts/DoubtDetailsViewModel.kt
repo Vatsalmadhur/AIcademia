@@ -49,6 +49,26 @@ class DoubtDetailsViewModel: ViewModel() {
         }
     }
 
+    private fun insertComment(comment: CommentModel){
+        val tmp = _comments.value.toMutableList()
+        tmp.add(0, comment)
+        _comments.value = tmp.toList()
+    }
+
+    suspend fun postComment( comment: CommentModel): Boolean {
+        try {
+            val id = uid ?: return false
+            comment.uid = id
+            doubtsCollection.document(_postId).collection("comments").document().set(comment).await()
+            insertComment(comment)
+            return true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return false
+        }
+    }
+
+
     suspend fun getDoubtDetails(){
         try {
             _loadingPost.value = true

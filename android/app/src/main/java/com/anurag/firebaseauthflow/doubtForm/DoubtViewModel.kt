@@ -26,18 +26,6 @@ class DoubtViewModel : ViewModel() {
     val prevStatus = _prevResStatus.asStateFlow()
 
 
-    private suspend fun postComment(postId: String, comment: CommentModel): Boolean {
-        try {
-            val id = uid ?: return false
-            comment.uid = id
-            doubtsCollection.document(postId).collection("comments").document().set(comment).await()
-            return true
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return false
-        }
-    }
-
     fun setTitle(str: String) {
         _title.value = str
     }
