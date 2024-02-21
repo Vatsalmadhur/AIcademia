@@ -1,6 +1,7 @@
 package com.anurag.firebaseauthflow.common.Quiz
 
 import FirebaseAuthFlowTheme
+import NordColors
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -111,7 +112,7 @@ fun OptionItem(
             .background(
                 if (reveal) {
                     if (isCorrect) {
-                        Color.Green
+                        NordColors.Aurora4
                     } else {
                         if (isSelected) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.surface
                     }
@@ -126,11 +127,25 @@ fun OptionItem(
         Checkbox(
             checked = isSelected,
             onCheckedChange = { onOptionSelected() },
+
         )
         Text(
             text = option,
             modifier = Modifier.weight(1f),
-            style = TextStyle(if (isSelected) MaterialTheme.colorScheme.onTertiary else MaterialTheme.colorScheme.onSurface)
+            style = TextStyle(
+                if (reveal) {
+                    if (isCorrect) {
+                        NordColors.PolarNight4
+                    } else {
+                        if (isSelected) MaterialTheme.colorScheme.onError else MaterialTheme.colorScheme.onSurface
+                    }
+                } else {
+                    if (isSelected)
+                        MaterialTheme.colorScheme.onTertiary
+                    else
+                        MaterialTheme.colorScheme.onSurface
+                }
+            )
         )
     }
 }

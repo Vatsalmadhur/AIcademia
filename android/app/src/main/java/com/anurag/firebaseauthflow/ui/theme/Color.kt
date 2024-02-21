@@ -37,7 +37,7 @@ val LightPalette = lightColorScheme(
     onError = Color.White,
     outline = NordColors.PolarNight4,
     tertiary = NordColors.PolarNight4,
-    onTertiary = NordColors.Snow1
+    onTertiary = NordColors.Snow1,
 )
 
 val DarkPalette = darkColorScheme(
